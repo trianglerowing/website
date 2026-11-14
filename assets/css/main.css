@@ -1,0 +1,119 @@
+/* Triangle Rowing Club — brand tokens and base styles.
+   Colors from the TRC brand guide (Marketing shared drive, Branding).
+   Fonts are set once below; font files are added with the brand assets work. */
+
+:root {
+  /* Brand colors */
+  --trc-orange: #E87722;      /* Pantone 158 C */
+  --trc-navy: #1B365D;        /* Pantone 534 C */
+  --trc-white: #FFFFFF;
+
+  /* Accessible variants. Brand orange on white is 2.96:1, below the 4.5:1
+     WCAG AA minimum for text, so orange is for accents, borders and large
+     shapes; text and links in orange use the darker shade (4.98:1). */
+  --trc-orange-text: #B35500;
+  --trc-navy-tint: #E8ECF2;
+  --trc-ink: #1A1A1A;
+  --trc-muted: #4A5566;
+
+  /* Typography: change a font here and nowhere else.
+     Aller (the brand guide's font) is not licensed for web use, so headings
+     use Urbanist until the club picks an open-license heading font
+     (see docs/brand.md). */
+  --font-heading: "Urbanist", system-ui, sans-serif;
+  --font-body: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Type scale (1.25 ratio) */
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.33rem;
+  --step-2: 1.66rem;
+  --step-3: 2.07rem;
+  --step-4: 2.59rem;
+
+  --space: 1rem;
+  --measure: 70ch;
+  --radius: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--trc-white);
+  color: var(--trc-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--trc-navy);
+  line-height: 1.2;
+  margin: 1.5em 0 0.5em;
+}
+h1 { font-size: var(--step-4); margin-top: 0.5em; }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+h4 { font-size: var(--step-1); }
+
+a { color: var(--trc-navy); text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+a:hover, a:focus-visible { color: var(--trc-orange-text); }
+:focus-visible { outline: 3px solid var(--trc-orange); outline-offset: 2px; }
+
+img { max-width: 100%; height: auto; }
+
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: var(--space); top: var(--space); background: var(--trc-white); padding: 0.5rem; z-index: 10; }
+
+.wrap { max-width: 72rem; margin: 0 auto; padding: 0 var(--space); }
+.prose { max-width: var(--measure); }
+
+/* Header */
+.site-header { background: var(--trc-navy); color: var(--trc-white); border-bottom: 4px solid var(--trc-orange); }
+.site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space); padding-block: 0.75rem; }
+.brand { display: flex; align-items: center; gap: 0.75rem; color: var(--trc-white); text-decoration: none; font-family: var(--font-heading); font-size: var(--step-1); }
+.brand img { height: 64px; width: auto; }
+.brand:hover, .brand:focus-visible { color: var(--trc-white); }
+
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+.site-nav a { color: var(--trc-white); text-decoration: none; font-weight: 600; }
+.site-nav a:hover, .site-nav a:focus-visible, .site-nav a[aria-current="page"] { color: var(--trc-white); text-decoration: underline; text-decoration-color: var(--trc-orange); text-decoration-thickness: 3px; }
+
+/* Main */
+main { padding-block: 2rem 3rem; }
+
+.button {
+  display: inline-block;
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--radius);
+  background: var(--trc-navy);
+  color: var(--trc-white);
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--trc-navy);
+}
+.button:hover, .button:focus-visible { background: var(--trc-white); color: var(--trc-navy); }
+.button--accent { background: var(--trc-orange); border-color: var(--trc-orange); color: var(--trc-navy); } /* navy on orange: 4.09:1, bold large text only */
+.button--accent:hover, .button--accent:focus-visible { background: var(--trc-white); color: var(--trc-navy); }
+.notice { background: var(--trc-navy-tint); border-left: 4px solid var(--trc-orange); padding: 0.75rem 1rem; }
+
+.embed { position: relative; width: 100%; margin: 1.5rem 0; }
+.embed iframe { width: 100%; border: 0; }
+.embed--video { aspect-ratio: 16 / 9; }
+.embed--video iframe { position: absolute; inset: 0; height: 100%; }
+
+.event-list { list-style: none; padding: 0; }
+.event-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--trc-navy-tint); }
+.event-list time { font-weight: 700; color: var(--trc-navy); margin-right: 0.5rem; }
+
+.child-list { list-style: none; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.child-list a { display: block; padding: 1rem; border: 1px solid var(--trc-navy-tint); border-top: 4px solid var(--trc-orange); border-radius: var(--radius); text-decoration: none; }
+
+/* Footer */
+.site-footer { background: var(--trc-navy); color: var(--trc-white); padding-block: 2rem; font-size: var(--step--1); }
+.site-footer a { color: var(--trc-white); }
+.site-footer ul { list-style: none; padding: 0; display: flex; gap: 1rem; flex-wrap: wrap; }

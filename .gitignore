@@ -1,0 +1,11 @@
+# Hugo build output and cache
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Local agent marker
+.pace.yml
+
+# Editor and OS clutter
+.DS_Store
+*.swp

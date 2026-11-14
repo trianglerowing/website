@@ -1,0 +1,16 @@
+{{ define "main" }}
+<article class="prose">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+</article>
+
+{{- $children := .Pages.ByWeight }}
+{{- if eq .Section "news" }}{{ $children = .Pages.ByDate.Reverse }}{{ end }}
+{{- with $children }}
+<ul class="child-list">
+  {{- range . }}
+  <li><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong>{{ with .Description }}<br>{{ . }}{{ end }}</a></li>
+  {{- end }}
+</ul>
+{{- end }}
+{{ end }}

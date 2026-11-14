@@ -1,0 +1,50 @@
+# Triangle Rowing Club website
+# Decision record: docs/decisions/0001-platform-and-hosting.md
+
+baseURL = "https://dev.trianglerowing.org/"
+locale = "en-US"
+title = "Triangle Rowing Club"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+# Hugo is pinned to one version (see .hugo-version) so the build does not
+# change when nobody is watching. A different version prints a warning.
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.169.0"
+    max = "0.169.0"
+
+  # Editors manage pages in content/pages (shown as a tree in the editor).
+  # Mounting it at the content root makes the folder layout the URL layout:
+  # content/pages/programs/high-school/_index.md -> /programs/high-school/
+  [[module.mounts]]
+    source = "content/pages"
+    target = "content"
+  [[module.mounts]]
+    source = "content/news"
+    target = "content/news"
+
+[markup.goldmark.renderer]
+  # Raw HTML in page text is not rendered. Embeds go through shortcodes,
+  # which validate their input.
+  unsafe = false
+
+[params]
+  description = "Youth rowing for middle and high school students in Raleigh, NC."
+  # true while the site lives at dev.trianglerowing.org: tells search engines
+  # not to index it. Set to false only at the launch cutover.
+  noindex = true
+
+  [params.address]
+    practice = "Lake Wheeler Park, 6404 Lake Wheeler Rd, Raleigh, NC 27603"
+    mailing = "PO Box 5102, Cary, NC"
+
+  [params.contact]
+    general = "info@trianglerowing.org"
+
+  # From the current trianglerowing.org footer (docs/research/trc-site-inventory.md).
+  [params.social]
+    facebook = "https://www.facebook.com/Triangle.Rowing.Club/"
+    instagram = "https://www.instagram.com/trianglerowing/"
+    x = "https://twitter.com/TriangleRowing"

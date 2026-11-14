@@ -1,0 +1,3 @@
+{{- /* Upcoming events list.
+     Usage: {{< calendar >}} for all calendars, or {{< calendar feed="high-school" limit="10" >}} */ -}}
+{{ partial "upcoming-events.html" (dict "limit" (int (.Get "limit" | default "10")) "feed" (.Get "feed")) }}

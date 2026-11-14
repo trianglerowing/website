@@ -1,0 +1,136 @@
+# Website editor (Sveltia CMS) configuration.
+# Editors sign in at /admin with a GitHub account that belongs to the club's
+# GitHub organization. Saving an entry commits it to the main branch and the
+# site rebuilds.
+#
+# Sign-in: GitHub sign-in needs a small authentication helper (an OAuth
+# client). It is set up with the server and deploy work; until then editors
+# can sign in with a GitHub personal access token.
+
+backend:
+  name: github
+  repo: trianglerowing/website
+  branch: main
+  # base_url: https://dev.trianglerowing.org   # authentication helper, added with the server work
+
+media_folder: static/images/uploads
+public_folder: /images/uploads
+
+site_url: https://dev.trianglerowing.org
+display_url: https://dev.trianglerowing.org
+logo_url: /favicon.ico
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: pages
+    label: Pages
+    label_singular: Page
+    description: Every page on the site, arranged as it appears in the address bar. Each page can hold pages beneath it.
+    folder: content/pages
+    create: true
+    nested:
+      depth: 4
+      summary: "{{title}}"
+    meta:
+      path:
+        widget: string
+        label: Address
+        index_file: _index
+    path: "{{slug}}/_index"
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: menu_title, label: Short title for the menu, widget: string, required: false }
+      - { name: description, label: Summary (one sentence for search engines and page lists), widget: string, required: false }
+      - { name: show_in_menu, label: Show in the main menu, widget: boolean, default: false }
+      - { name: weight, label: Order (lower numbers first), widget: number, value_type: int, default: 50 }
+      - { name: body, label: Page text, widget: markdown }
+
+  - name: news
+    label: News
+    label_singular: News post
+    folder: content/news
+    create: true
+    path: "{{year}}/{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: date, label: Date, widget: datetime }
+      - { name: description, label: Summary, widget: string, required: false }
+      - { name: image, label: Photo (no identifiable minors without consent), widget: image, required: false }
+      - { name: body, label: Post, widget: markdown }
+
+  - name: coaches
+    label: Coaches
+    label_singular: Coach
+    folder: data/coaches
+    format: yaml
+    extension: yaml
+    create: true
+    identifier_field: name
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: role, label: Role, widget: string }
+      - { name: weight, label: Order (lower numbers first), widget: number, value_type: int, default: 50 }
+      - { name: photo, label: Photo, widget: image, required: false }
+      - { name: bio, label: Biography, widget: markdown, required: false }
+
+  - name: sponsors
+    label: Sponsors
+    label_singular: Sponsor
+    folder: data/sponsors
+    format: yaml
+    extension: yaml
+    create: true
+    identifier_field: name
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: level, label: Level, widget: select, options: [Platinum, Gold, Silver Oar, Bronze Oar, Supporter] }
+      - { name: url, label: Website, widget: string, required: false }
+      - { name: logo, label: Logo, widget: image, required: false }
+
+  - name: club
+    label: Club settings
+    files:
+      - name: settings
+        label: Registration, donations and season
+        file: data/settings.yaml
+        format: yaml
+        fields:
+          - { name: season_label, label: Current season, widget: string }
+          - name: donate
+            label: Donate button
+            widget: object
+            fields:
+              - { name: label, label: Button text, widget: string }
+              - { name: url, label: Donation link, widget: string }
+          - name: calendar
+            label: Calendar
+            widget: object
+            fields:
+              - { name: url, label: Calendar page link, widget: string }
+          - name: registration
+            label: Registration links
+            label_singular: Program
+            widget: list
+            summary: "{{label}} (open: {{open}})"
+            fields:
+              - { name: key, label: Short name used in pages, widget: string }
+              - { name: label, label: Button text, widget: string }
+              - { name: url, label: SportsEngine form link, widget: string, pattern: ['^https://[a-z0-9-]+\.sportngin\.com/', 'Must be a SportsEngine link on sportngin.com'] }
+              - { name: open, label: Registration open, widget: boolean }
+      - name: glossary
+        label: Rowing glossary
+        file: data/glossary.yaml
+        format: yaml
+        fields:
+          - name: terms
+            label: Terms
+            label_singular: Term
+            widget: list
+            summary: "{{term}}"
+            fields:
+              - { name: term, label: Term, widget: string }
+              - { name: definition, label: Definition, widget: text }

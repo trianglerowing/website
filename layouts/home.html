@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="prose">
+  <h1>{{ .Title | default site.Title }}</h1>
+  {{ .Content }}
+</div>
+
+<section aria-labelledby="upcoming">
+  <h2 id="upcoming">Upcoming</h2>
+  {{ partial "upcoming-events.html" (dict "limit" 5) }}
+</section>
+
+{{- with first 3 (where site.RegularPages "Section" "news") }}
+<section aria-labelledby="news">
+  <h2 id="news">News</h2>
+  <ul class="child-list">
+    {{- range . }}
+    <li><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong><br><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></a></li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}
+{{ end }}

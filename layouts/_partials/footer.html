@@ -1,0 +1,18 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>{{ site.Title }}</strong> · a nonprofit youth rowing club</p>
+    {{- with site.Params.address }}
+    <p>Practice: {{ .practice }}<br>Mail: {{ .mailing }}</p>
+    {{- end }}
+    {{- with site.Params.contact.general }}
+    <p><a href="mailto:{{ . }}">{{ . }}</a></p>
+    {{- end }}
+    {{- with site.Params.social }}
+    <ul aria-label="Social media">
+      {{- with .facebook }}<li><a href="{{ . }}">Facebook</a></li>{{ end }}
+      {{- with .instagram }}<li><a href="{{ . }}">Instagram</a></li>{{ end }}
+      {{- with .x }}<li><a href="{{ . }}">X (Twitter)</a></li>{{ end }}
+    </ul>
+    {{- end }}
+  </div>
+</footer>

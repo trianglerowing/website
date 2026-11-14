@@ -1,0 +1,17 @@
+{{- /* Registration button for a program listed in Club settings.
+     Usage: {{< register program="sneak-peek-week" >}}
+     The button links to the SportsEngine form on SportsEngine's own hostname.
+     When the program is marked closed in Club settings, a notice shows instead,
+     so opening or closing registration is one switch in the editor. */ -}}
+{{- $key := .Get "program" }}
+{{- $match := where hugo.Data.settings.registration "key" $key }}
+{{- if not $match }}
+  {{- errorf "register shortcode on %s: no program %q in data/settings.yaml" .Page.File.Path $key }}
+{{- end }}
+{{- with index $match 0 }}
+  {{- if .open }}
+<p><a class="button" href="{{ .url }}">{{ .label }}</a></p>
+  {{- else }}
+<p class="notice">Registration is closed right now. Check back soon, or <a href="mailto:{{ site.Params.contact.general }}">email us</a> to hear when it opens.</p>
+  {{- end }}
+{{- end }}

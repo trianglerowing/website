@@ -1,0 +1,6 @@
+{{- /* Donate button. Uses the donation link in Club settings unless a url is given.
+     Usage: {{< donate >}} or {{< donate label="Support the Erg-a-thon" url="https://givebutter.com/c/erg-a-thon2026" >}} */ -}}
+{{- $d := hugo.Data.settings.donate }}
+{{- $url := .Get "url" | default $d.url }}
+{{- $label := .Get "label" | default $d.label }}
+<p><a class="button button--accent" href="{{ $url }}">{{ $label }}</a></p>

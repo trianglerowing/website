@@ -1,0 +1,25 @@
+{{- /* Upcoming events from data/events/<feed>.json, written by the calendar
+     feed converter (calendar work). Each file is a list of
+     {title, start, end, location, feed}. Until that exists, link to the
+     SportsEngine calendar. Arguments: limit (int), feed (optional name). */ -}}
+{{- $limit := .limit | default 5 }}
+{{- $events := slice }}
+{{- with hugo.Data.events }}
+  {{- range $name, $list := . }}
+    {{- if or (not $.feed) (eq $.feed $name) }}
+      {{- range $list }}{{ $events = $events | append . }}{{ end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $now := now.Format "2006-01-02T15:04:05Z07:00" }}
+{{- $upcoming := where $events "start" "ge" $now }}
+{{- if $upcoming }}
+<ul class="event-list">
+  {{- range first $limit (sort $upcoming "start") }}
+  {{- $start := time .start }}
+  <li><time datetime="{{ .start }}">{{ $start.Format "Mon, Jan 2" }}</time> {{ .title }}{{ with .location }} · {{ . }}{{ end }}</li>
+  {{- end }}
+</ul>
+{{- else }}
+<p>See the <a href="{{ hugo.Data.settings.calendar.url }}">club calendar</a> for practices, regattas and events.</p>
+{{- end }}

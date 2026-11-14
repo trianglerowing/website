@@ -1,0 +1,17 @@
+{{- /* Embed another site's page in a frame.
+     Usage: {{< embed src="https://..." title="What this shows" height="600" >}}
+     A title is required so screen-reader users know what the frame holds.
+     Only https sources are allowed. Do not embed SportsEngine registration
+     forms: link to them with the register shortcode instead. */ -}}
+{{- $src := .Get "src" }}
+{{- $title := .Get "title" }}
+{{- $height := .Get "height" | default "600" }}
+{{- if not (hasPrefix $src "https://") }}
+  {{- errorf "embed shortcode on %s: src must start with https:// (got %q)" .Page.File.Path $src }}
+{{- end }}
+{{- if not $title }}
+  {{- errorf "embed shortcode on %s: a title is required" .Page.File.Path }}
+{{- end }}
+<div class="embed">
+  <iframe src="{{ $src }}" title="{{ $title }}" height="{{ $height }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+</div>

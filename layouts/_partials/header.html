@@ -1,0 +1,21 @@
+{{- /* The shield is TRC's primary logo and must be the most prominent logo on
+     the page (brand guide). It is added under assets/brand/ by the brand
+     assets work; until then the club name shows as text. */ -}}
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">
+      {{- with resources.GetMatch "brand/shield.*" }}
+      <img src="{{ .RelPermalink }}" alt="" width="{{ .Width }}" height="{{ .Height }}">
+      {{- end }}
+      <span>{{ site.Title }}</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {{- $current := . }}
+        {{- range where site.Home.Sections.ByWeight "Params.show_in_menu" true }}
+        <li><a href="{{ .RelPermalink }}"{{ if or (eq $current .) ($current.IsDescendant .) }} aria-current="page"{{ end }}>{{ .Params.menu_title | default .Title }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,32 @@
+# Season-dependent values, edited in the website editor under "Club settings".
+# Pages read these, so one change here updates every page that uses them.
+# Registration, payments and rosters stay on SportsEngine: these are links
+# to SportsEngine forms on its own hostname, never a trianglerowing.org path.
+
+season_label: "TODO(board): current season name, for example Spring 2027"
+
+donate:
+  label: "Donate"
+  url: "https://givebutter.com/triangle-rowing-club"
+
+calendar:
+  # SportsEngine calendar page; feed URLs are added by the calendar work.
+  url: "https://www.trianglerowing.org/page/show/7282304-calendar"
+
+registration:
+  - key: sneak-peek-week
+    label: "Register for Sneak Peek Week"
+    url: "https://triangle-rowing-club.sportngin.com/register/form/965436227"
+    open: false
+  - key: learn-to-row
+    label: "Register for Learn to Row"
+    url: "https://triangle-rowing-club.sportngin.com/register/form/148012664"
+    open: false
+  - key: winter-training
+    label: "Register for winter training"
+    url: "https://triangle-rowing-club.sportngin.com/register/form/770415448"
+    open: false
+  - key: interest
+    label: "Tell us you're interested"
+    url: "https://triangle-rowing-club.sportngin.com/register/form/827812930"
+    open: true

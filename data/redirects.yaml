@@ -1,0 +1,135 @@
+# Old SportsEngine path -> new path. Served as 301 redirects by Caddy.
+# Keys are paths only (no host). Pages are listed in docs/site-map.md.
+
+"/home": "/"
+"/page/show/7282296-youth-rowing-club-raleigh-nc": "/"
+
+"/facilities": "/about/facilities/"
+"/our-facilities": "/about/facilities/"
+"/page/show/7282299-our-facilities": "/about/facilities/"
+
+"/calendar": "/families/calendar/"
+"/page/show/7282304-calendar": "/families/calendar/"
+
+"/programs": "/programs/"
+"/page/show/7284561-programs": "/programs/"
+
+"/high-school": "/programs/high-school/"
+"/trc-high-school-program": "/programs/high-school/"
+"/page/show/7284563-trc-high-school-program": "/programs/high-school/"
+
+"/learn-to-row": "/programs/learn-to-row/"
+"/page/show/7284564-learn-to-row": "/programs/learn-to-row/"
+
+"/sneak-peek-week": "/programs/sneak-peek-week/"
+"/page/show/7284689-sneak-peek-week": "/programs/sneak-peek-week/"
+
+"/coaches": "/about/coaches/"
+"/our-coaches": "/about/coaches/"
+"/page/show/7284812-our-coaches": "/about/coaches/"
+
+"/support-us": "/support/"
+"/page/show/7284952-support-us": "/support/"
+
+"/sustainer": "/support/monthly-giving/"
+"/become-a-sustainer": "/support/monthly-giving/"
+"/page/show/7284959-become-a-sustainer": "/support/monthly-giving/"
+"/sustainer-faq": "/support/monthly-giving/"
+"/page/show/7285005-sustainer-faq": "/support/monthly-giving/"
+
+"/corporate-matching": "/support/sponsors/"
+"/page/show/7284962-corporate-matching": "/support/sponsors/"
+
+"/donations": "/support/donate/"
+"/page/show/7284964-donations": "/support/donate/"
+
+"/achievements": "/about/achievements/"
+"/our-achievements": "/about/achievements/"
+"/page/show/7285940-our-achievements": "/about/achievements/"
+
+"/middle-school": "/programs/middle-school/"
+"/trc-middle-school-program": "/programs/middle-school/"
+"/page/show/7286325-trc-middle-school-program": "/programs/middle-school/"
+
+"/off-season-training": "/programs/off-season-training/"
+"/page/show/7286327-off-season-training": "/programs/off-season-training/"
+
+"/volunteering": "/families/volunteering/"
+"/page/show/7293605-volunteering": "/families/volunteering/"
+"/volunteer-faq": "/families/volunteering/"
+"/page/show/7373510-volunteer-faq": "/families/volunteering/"
+
+"/new": "/new-to-rowing/"
+"/new-to-trc": "/new-to-rowing/"
+"/page/show/7301524-new-to-trc": "/new-to-rowing/"
+
+"/rowing-101": "/new-to-rowing/how-rowing-works/"
+"/page/show/7301588-rowing-101": "/new-to-rowing/how-rowing-works/"
+"/boats": "/new-to-rowing/how-rowing-works/"
+"/page/show/7318359-boats-": "/new-to-rowing/how-rowing-works/"
+"/racing": "/new-to-rowing/how-rowing-works/"
+"/page/show/7318366-racing": "/new-to-rowing/how-rowing-works/"
+
+"/rowing-terms": "/new-to-rowing/glossary/"
+"/page/show/7318383-rowing-terms": "/new-to-rowing/glossary/"
+
+"/faq": "/families/"
+"/for-members": "/families/"
+"/page/show/7373046-for-members": "/families/"
+
+"/practices": "/families/practice/"
+"/practice": "/families/practice/"
+"/page/show/7373185-practice": "/families/practice/"
+"/training-schedule": "/families/practice/"
+"/our-training-schedule": "/families/practice/"
+"/page/show/9075305-our-training-schedule": "/families/practice/"
+
+"/regattas": "/families/regatta-schedule/"
+"/page/show/7373241-regattas": "/families/regatta-schedule/"
+
+"/trc-registrations": "/families/registration-help/"
+"/registration": "/families/registration-help/"
+"/page/show/7373502-registration": "/families/registration-help/"
+"/se-login": "/families/registration-help/"
+"/se-login-and-profile-access-": "/families/registration-help/"
+"/page/show/7480847-se-login-and-profile-access-": "/families/registration-help/"
+"/registration-editing": "/families/registration-help/"
+"/page/show/7480852-registration-editing": "/families/registration-help/"
+"/details": "/families/registration-help/"
+"/page/show/7480856-details": "/families/registration-help/"
+"/edit-profile-information": "/families/registration-help/"
+"/page/show/7480891-edit-profile-information": "/families/registration-help/"
+"/se-communications": "/families/registration-help/"
+"/page/show/7480922-se-communications": "/families/registration-help/"
+"/add-guardian": "/families/registration-help/"
+"/page/show/7480943-add-guardian": "/families/registration-help/"
+
+"/practice-faq": "/new-to-rowing/parent-faq/"
+"/page/show/7373508-practice-faq": "/new-to-rowing/parent-faq/"
+"/registration-faq": "/new-to-rowing/parent-faq/"
+"/page/show/7373519-registration-faq": "/new-to-rowing/parent-faq/"
+
+"/regatta-faq": "/new-to-rowing/regatta-guide/"
+"/page/show/7373509-regatta-faq": "/new-to-rowing/regatta-guide/"
+
+"/uniforms-and-spiritwear": "/new-to-rowing/gear/"
+"/uniforms-spirit-wear": "/new-to-rowing/gear/"
+"/page/show/7373774-uniforms-spirit-wear": "/new-to-rowing/gear/"
+
+"/safety": "/families/safety/"
+"/safety-and-safesport": "/families/safety/"
+"/page/show/7380039-safety-and-safesport": "/families/safety/"
+
+"/erg-a-thon": "/support/erg-a-thon/"
+"/page/show/7798788-erg-a-thon": "/support/erg-a-thon/"
+
+"/tuition-reduction-program": "/programs/financial-aid/"
+"/page/show/8051782-tuition-reduction-program": "/programs/financial-aid/"
+
+"/join": "/join/"
+"/join-our-team": "/join/"
+"/page/show/8883554-join-our-team": "/join/"
+
+"/privacy_policy.pdf": "/about/privacy/"
+
+"/page_element/compose_email/2760521": "/about/contact/"
