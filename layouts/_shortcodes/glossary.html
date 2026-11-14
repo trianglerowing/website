@@ -1,0 +1,9 @@
+{{- /* Rowing glossary: every term in data/glossary.yaml as a definition list, sorted by term.
+     Usage: {{< glossary >}} */ -}}
+{{- $terms := sort hugo.Data.glossary.terms "term" }}
+<dl class="glossary">
+  {{- range $terms }}
+  <dt id="{{ .term | anchorize }}">{{ .term }}</dt>
+  <dd>{{ .definition }}</dd>
+  {{- end }}
+</dl>

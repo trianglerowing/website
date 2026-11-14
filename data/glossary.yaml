@@ -1,5 +1,103 @@
 # Rowing terms, edited in the website editor under "Club settings > Rowing glossary".
-# Filled in by the new-parent guides work.
+# The glossary page shows them sorted by term.
 terms:
+  - term: 1x
+    definition: A single, a boat for one rower who uses two oars (sculls). Said "one-ex".
+  - term: 2x
+    definition: A double, a boat for two rowers who each use two oars. Said "two-ex".
+  - term: 2-
+    definition: A pair, a boat for two rowers who each use one oar, with no coxswain.
+  - term: 4+
+    definition: A coxed four, a boat for four rowers who each use one oar, plus a coxswain.
+  - term: 4x
+    definition: A quad, a boat for four rowers who each use two oars. Often raced without a coxswain.
+  - term: 8+
+    definition: An eight, the longest and fastest boat. Eight rowers who each use one oar, plus a coxswain.
+  - term: 2k
+    definition: A 2,000-meter race, about 1.25 miles. It is the standard sprint race distance and the standard test on an erg.
+  - term: Bow
+    definition: The front of the boat, the end that crosses the finish line first. Also the name for the rower seated closest to that end.
+  - term: Bow seat
+    definition: The seat nearest the front of the boat. In most boats the bow seat rower is seat 1.
+  - term: Stern
+    definition: The back of the boat. The coxswain usually sits here.
+  - term: Port
+    definition: The left side of the boat when you face forward. Rowers face backward, so port is on their right.
+  - term: Starboard
+    definition: The right side of the boat when you face forward. Rowers face backward, so starboard is on their left.
+  - term: Sweep
+    definition: Rowing with one oar per rower. Rowers alternate sides, so half row on port and half on starboard. Pairs, fours and eights are sweep boats.
+  - term: Sculling
+    definition: Rowing with two oars per rower, one in each hand. Singles, doubles and quads are sculling boats. The oars are called sculls.
   - term: Coxswain
-    definition: The athlete who steers the boat, calls the race plan and keeps the crew together. Sits in the stern or lies in the bow and does not row.
+    definition: The athlete who steers the boat, calls the race plan and keeps the crew together. Sits in the stern or lies in the bow and does not row. Often shortened to cox.
+  - term: Erg
+    definition: A rowing machine, short for ergometer. Rowers use it indoors for training and for fitness tests.
+  - term: Catch
+    definition: The start of the stroke. The rower is compressed forward, the blade drops into the water and the legs begin to push.
+  - term: Drive
+    definition: The part of the stroke where the rower pushes with the legs, then swings the back and pulls with the arms to move the boat.
+  - term: Finish
+    definition: The end of the drive. The rower pulls the handle to the body, then lowers the handle to lift the blade out of the water. Also the line that ends a race.
+  - term: Recovery
+    definition: The part of the stroke between the finish and the next catch. The rower slides forward on the seat while the blade is out of the water.
+  - term: Stroke
+    definition: One full cycle of catch, drive, finish and recovery. Also the name for the rower in the seat nearest the stern, who sets the rhythm for the boat.
+  - term: Stroke rate
+    definition: How many strokes a crew takes in one minute. Coaches and coxswains track it during practice and races.
+  - term: Blade
+    definition: The flat, wide end of the oar that goes in the water.
+  - term: Oar
+    definition: The long pole a rower pulls to move the boat. In sweep rowing it is called an oar; in sculling a pair of shorter oars are called sculls.
+  - term: Oarlock
+    definition: The swivel that holds the oar to the boat and lets it turn.
+  - term: Rigger
+    definition: The metal arm that sticks out from the side of the boat and holds the oarlock.
+  - term: Shell
+    definition: The thin, light racing boat. Also called a boat.
+  - term: Hull
+    definition: The body of the boat, the part that sits in the water.
+  - term: Slide
+    definition: The track the seat rolls on. The seat slides toward the stern during the drive and toward the bow during the recovery.
+  - term: Foot stretcher
+    definition: The board with shoes where a rower's feet are strapped in. Rowers push against it during the drive.
+  - term: Rack
+    definition: The frame in the boathouse that holds boats upside down and off the ground.
+  - term: Launch
+    definition: A small motorboat that a coach uses to follow crews on the water and give instruction by megaphone.
+  - term: Boathouse
+    definition: The building where boats, oars and erg machines are stored and where rowers meet before practice.
+  - term: Dock
+    definition: The floating platform where crews get into and out of boats.
+  - term: Trailer
+    definition: The long trailer that carries the club's boats to regattas. Parents and coaches help load and unload it.
+  - term: Regatta
+    definition: A rowing competition made up of many races. Clubs travel to regattas and often spend the day there.
+  - term: Head race
+    definition: A longer race, usually about 5,000 meters, held in the fall. Boats start one at a time, a few seconds apart, and are timed. The fastest total time wins.
+  - term: Sprint race
+    definition: A 2,000-meter race held in the spring. Several boats start side by side in lanes, and the first across the line wins.
+  - term: Heat
+    definition: One race in a regatta with several races of the same type. Fast boats from the heats may advance to a later race.
+  - term: Heat sheet
+    definition: The schedule that lists every race, the time it starts and the crews and lanes in it. Parents use it to know when to watch.
+  - term: Final
+    definition: The last race of an event, between the fastest crews from the earlier heats.
+  - term: Lane
+    definition: The marked strip of water a boat stays in during a sprint race.
+  - term: Bib
+    definition: The number a crew wears or carries so that officials can identify the boat. Used mostly at head races.
+  - term: Novice
+    definition: A rower in the first year or so of rowing. Novice crews race against each other.
+  - term: Varsity
+    definition: The most experienced crews in a club. Varsity crews race the top level at a regatta.
+  - term: Weigh enough
+    definition: The command for the crew to stop rowing and hold the blades still.
+  - term: Power ten
+    definition: A call from the coxswain for ten of the hardest strokes the crew can take.
+  - term: Rigging
+    definition: Adjusting the settings of a boat, such as the height of the oarlocks, to fit the rowers.
+  - term: Parent tent
+    definition: The tent the club sets up at a regatta where families meet, eat and rest between races.
+  - term: Volunteer token
+    definition: A credit a family earns by working a club volunteer job.
