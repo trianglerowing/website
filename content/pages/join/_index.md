@@ -16,6 +16,14 @@ TRC is a competitive rowing team for students in grades 6 to 12. Beginners are w
 2. **Try rowing.** No experience is needed. Come to a summer [Learn to Row](/programs/learn-to-row/) camp or a fall [Sneak Peek Week](/programs/sneak-peek-week/). Bring workout clothes, water and a willingness to work.
 3. **Register and get gear.** When your child commits, we guide you through online registration, [uniform ordering](/new-to-rowing/gear/), season dues, [financial aid](/programs/financial-aid/) and the USRowing membership and waiver. Find costs on the [programs page](/programs/) and registration tips on the [registration help page](/families/registration-help/).
 
+## Forms
+
+* [Athlete and Family Manual](https://docs.google.com/document/d/1l1XDuctHbmLf5_-8-PdGtmUhkeuOsoHXfHpPxNb3kd8/edit): club rules and expectations.
+* [Registration waivers (PDF)](https://cdn3.sportngin.com/attachments/document/f032-2931335/TRC_Registration_Waivers.pdf): blank copy. You agree to these when you register.
+* USRowing membership and waiver: [steps and details](https://usrowing.org/sports/2016/6/27/3316_132107070444805064.aspx).
+
+TODO(board): Confirm the waiver PDF is current. It is hosted on the old SportsEngine site; copy it into static/documents/ before that site closes.
+
 ## Who can join
 
 * Students in grades 6 to 12.

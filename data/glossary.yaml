@@ -74,7 +74,7 @@ terms:
   - term: Regatta
     definition: A rowing competition made up of many races. Clubs travel to regattas and often spend the day there.
   - term: Head race
-    definition: A longer race, usually about 5,000 meters, held in the fall. Boats start one at a time, a few seconds apart, and are timed. The fastest total time wins.
+    definition: A longer race, usually about 3,500 to 5,000 meters, held in the fall. Boats start one at a time, a few seconds apart, and are timed. The fastest total time wins.
   - term: Sprint race
     definition: A 2,000-meter race held in the spring. Several boats start side by side in lanes, and the first across the line wins.
   - term: Heat
@@ -101,3 +101,43 @@ terms:
     definition: The tent the club sets up at a regatta where families meet, eat and rest between races.
   - term: Volunteer token
     definition: A credit a family earns by working a club volunteer job.
+  - term: Crab
+    definition: A mistake where the blade gets stuck in the water and acts as a brake. It slows the boat and can pull the oar out of the rower's hands.
+  - term: Repechage
+    definition: A second-chance race for crews that did not advance from their heat. Said "REP-uh-shahj".
+  - term: Feather
+    definition: To turn the blade flat to the water after the finish, so it slides over the surface during the recovery.
+  - term: Square
+    definition: To turn the blade to face the water before the catch, ready to take the stroke.
+  - term: A, B and C finals
+    definition: Final races for different places. The A final decides first to sixth, the B final seventh to twelfth, and the C final thirteenth to eighteenth.
+  - term: Split
+    definition: The time a crew would take to row 500 meters at its current pace. It is shown on erg screens and used by coxswains.
+  - term: Piece
+    definition: One timed or measured part of a workout, such as a 2k or a set of 500-meter rows.
+  - term: Unisuit
+    definition: A one-piece, close-fitting racing suit. Often called a uni.
+  - term: FISA
+    definition: The old name of World Rowing, the group that governs international rowing. It stood for the International Federation of Rowing Associations.
+  - term: Crew
+    definition: A team of rowers in one boat. In the United States, "crew" is also another word for the sport of rowing.
+  - term: Rating
+    definition: The number of strokes a crew takes in one minute. Same as stroke rate.
+  - term: Stakeboat
+    definition: A small anchored boat that holds a shell in place at the start of a race.
+  - term: Rudder
+    definition: The small fin at the back of the boat that steers it. The coxswain controls it.
+  - term: Skeg
+    definition: A small fixed fin under the boat that helps it track straight.
+  - term: Gunwale
+    definition: The top edge of the boat's side. Said "GUN-ul".
+  - term: Pogies
+    definition: Fleece or neoprene mitts that fit over the oar handle, so rowers keep their hands warm and still hold the handle bare.
+  - term: Swing
+    definition: The feeling when every rower moves together and the boat runs smoothly.
+  - term: Check
+    definition: The drag on the boat when rowers' bodies slow it down during the recovery. Good technique keeps it small.
+  - term: Course
+    definition: The marked stretch of water a race is rowed on. Sprint courses are 2,000 meters with lanes.
+  - term: Buoy
+    definition: A float that marks the lanes or edges of the course.
