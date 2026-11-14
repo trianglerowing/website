@@ -11,7 +11,7 @@ hero:
   photo: "images/home/eight-overhead-racing.jpg"
   alt: "A Triangle Rowing Club eight seen from above, oars splashing as the crew drives through a race"
   join_label: "Join the team"
-  video_label: "Watch us race"
+  video_label: "Watch us row"
 
 # Figures from the Achievements page (content/pages/about/achievements).
 # Update both places together.
@@ -26,7 +26,7 @@ stats_link: "/about/achievements/"
 stats_link_label: "See our results"
 
 video:
-  heading: "See us race"
+  heading: "See us row"
   id: "RNblDvboIq0"
   title: "Triangle Rowing Club team video"
 
