@@ -28,7 +28,7 @@ collections:
   - name: pages
     label: Pages
     label_singular: Page
-    description: Every page on the site, arranged as it appears in the address bar. Each page can hold pages beneath it.
+    description: "Every page on the site, arranged as it appears in the address bar. Each page can hold pages beneath it. New to editing? Read the editor guide: https://github.com/trianglerowing/website/blob/main/docs/editor-guide.md"
     folder: content/pages
     create: true
     nested:
@@ -51,6 +51,7 @@ collections:
   - name: news
     label: News
     label_singular: News post
+    description: "New to editing? Read the editor guide: https://github.com/trianglerowing/website/blob/main/docs/editor-guide.md"
     folder: content/news
     create: true
     path: "{{year}}/{{slug}}"
@@ -65,6 +66,7 @@ collections:
   - name: coaches
     label: Coaches
     label_singular: Coach
+    description: "New to editing? Read the editor guide: https://github.com/trianglerowing/website/blob/main/docs/editor-guide.md"
     folder: data/coaches
     format: yaml
     extension: yaml
@@ -80,6 +82,7 @@ collections:
   - name: sponsors
     label: Sponsors
     label_singular: Sponsor
+    description: "New to editing? Read the editor guide: https://github.com/trianglerowing/website/blob/main/docs/editor-guide.md"
     folder: data/sponsors
     format: yaml
     extension: yaml
@@ -93,6 +96,7 @@ collections:
 
   - name: club
     label: Club settings
+    description: "New to editing? Read the editor guide: https://github.com/trianglerowing/website/blob/main/docs/editor-guide.md"
     files:
       - name: settings
         label: Registration, donations and season
