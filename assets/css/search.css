@@ -1,0 +1,15 @@
+/* Site search: header link and /search/ page. Colours come from the brand tokens in main.css. */
+.site-search-link { color: var(--trc-white); font-weight: 600; text-decoration: none; padding: 0.25rem 0.75rem; border: 2px solid var(--trc-orange); border-radius: var(--radius); }
+.site-search-link:hover, .site-search-link:focus-visible { background: var(--trc-white); color: var(--trc-navy); }
+.search-label { display: block; font-weight: 600; color: var(--trc-navy); margin-bottom: 0.5rem; }
+#search {
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-primary: var(--trc-navy);
+  --pagefind-ui-text: var(--trc-ink);
+  --pagefind-ui-background: var(--trc-white);
+  --pagefind-ui-border: var(--trc-muted);
+  --pagefind-ui-tag: var(--trc-navy-tint);
+  --pagefind-ui-border-width: 2px;
+  --pagefind-ui-border-radius: var(--radius);
+  --pagefind-ui-font: var(--font-body);
+}

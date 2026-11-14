@@ -17,7 +17,7 @@ hugo server        # preview at http://localhost:1313, rebuilds on save
 hugo --minify      # production build into public/
 ```
 
-There is no npm, no theme module and no other build dependency, on purpose: they are what makes small sites stop building after a year untouched.
+The only build dependency besides Hugo is Pagefind (https://pagefind.app), which builds the site search index from the finished site and ships it as static files, so search needs no server and no outside service. Like Hugo it is one pinned release binary checked against a pinned SHA-256 in `.github/workflows/build.yml` (currently 1.5.2, extended edition, linux x86_64). Run it after Hugo with `pagefind --site public`. There is no npm, no theme module and nothing else to install, on purpose: dependencies are what make small sites stop building after a year untouched.
 
 ## Layout
 

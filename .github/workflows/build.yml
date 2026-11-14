@@ -17,6 +17,8 @@ permissions:
 env:
   HUGO_VERSION: "0.169.0"
   HUGO_SHA256: "c41672a0725d307758a132bc94a962e59760eb33f9ba08c991b81f9881d6fa7d"
+  PAGEFIND_VERSION: "1.5.2"
+  PAGEFIND_SHA256: "aeb135927856e7a49816cf2c9c2e53167f87afa1f61f7288b7d66c234a950d38"
 
 jobs:
   build:
@@ -33,6 +35,15 @@ jobs:
           tar -xzf "$RUNNER_TEMP/hugo.tar.gz" -C "$RUNNER_TEMP/hugo" hugo
           echo "$RUNNER_TEMP/hugo" >> "$GITHUB_PATH"
 
+      - name: Install Pagefind extended
+        run: |
+          url="https://github.com/CloudCannon/pagefind/releases/download/v${PAGEFIND_VERSION}/pagefind_extended-v${PAGEFIND_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+          curl -fsSL -o "$RUNNER_TEMP/pagefind.tar.gz" "$url"
+          echo "${PAGEFIND_SHA256}  $RUNNER_TEMP/pagefind.tar.gz" | sha256sum --check -
+          mkdir -p "$RUNNER_TEMP/pagefind"
+          tar -xzf "$RUNNER_TEMP/pagefind.tar.gz" -C "$RUNNER_TEMP/pagefind" pagefind_extended
+          echo "$RUNNER_TEMP/pagefind" >> "$GITHUB_PATH"
+
       # Exits 0 even when a feed is unreachable; the committed data/events
       # files then stay as the last good copy.
       - name: Convert calendar feeds
@@ -40,6 +51,10 @@ jobs:
 
       - name: Build site
         run: hugo --minify --panicOnWarning
+
+      # Builds public/pagefind/ (search index and script) before the upload.
+      - name: Build search index
+        run: pagefind_extended --site public
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
