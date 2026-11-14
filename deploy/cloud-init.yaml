@@ -1,0 +1,80 @@
+#cloud-config
+# Server setup for the Triangle Rowing Club website on Hetzner Cloud.
+# Paste this whole file into "Cloud config" when creating the server
+# (Debian 13). See docs/operations.md.
+#
+# Result: Caddy serving /srv/trc/site over HTTPS, a "deploy" user that GitHub
+# Actions uses to upload the site, SSH by key only, only ports 22/80/443 open,
+# and security updates installed automatically.
+
+package_update: true
+package_upgrade: true
+packages:
+  - caddy
+  - rsync
+  - ufw
+  - unattended-upgrades
+
+users:
+  - default
+  - name: deploy
+    gecos: Website deploy (GitHub Actions)
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_authorized_keys:
+      # Public half of the deploy key; the private half is the
+      # DEPLOY_SSH_KEY secret in the trianglerowing/website GitHub repository.
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH2hw/2n37xb6haYeWYMKZ8edcetukmSJPOAmPgt1/4Z deploy@github-actions"
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/10-trc-hardening.conf
+    permissions: "0644"
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin prohibit-password
+
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    permissions: "0644"
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+
+  # The deploy user may reload the web server (to pick up new redirects) and
+  # nothing else as root.
+  - path: /etc/sudoers.d/deploy-caddy
+    permissions: "0440"
+    content: |
+      deploy ALL=(root) NOPASSWD: /usr/bin/systemctl reload caddy
+
+  # Written after packages install so the caddy package does not replace it.
+  # The real configuration is deploy/Caddyfile in the repository; the deploy
+  # job uploads it to /srv/trc/Caddyfile, so web server changes go through
+  # pull requests like everything else.
+  - path: /etc/caddy/Caddyfile
+    permissions: "0644"
+    defer: true
+    content: |
+      import /srv/trc/Caddyfile
+
+  # Placeholder until the first deploy uploads the real one.
+  - path: /srv/trc/Caddyfile
+    permissions: "0644"
+    defer: true
+    content: |
+      :80 {
+      	respond "Triangle Rowing Club website is being set up." 200
+      }
+
+runcmd:
+  - [mkdir, -p, /srv/trc/site]
+  - [touch, /srv/trc/redirects.caddy]
+  - [chown, -R, "deploy:deploy", /srv/trc]
+  - [ufw, default, deny, incoming]
+  - [ufw, default, allow, outgoing]
+  - [ufw, allow, 22/tcp]
+  - [ufw, allow, 80/tcp]
+  - [ufw, allow, 443/tcp]
+  - [ufw, --force, enable]
+  - [systemctl, reload, ssh]
+  - [systemctl, restart, caddy]
