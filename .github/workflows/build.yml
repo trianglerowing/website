@@ -92,4 +92,4 @@ jobs:
           ssh_cmd="ssh -i $HOME/.ssh/deploy -o StrictHostKeyChecking=yes -o BatchMode=yes"
           rsync -rlz --delete --exclude /redirects.caddy -e "$ssh_cmd" public/ "deploy@$HOST:/srv/trc/site/"
           rsync -z -e "$ssh_cmd" public/redirects.caddy "deploy@$HOST:/srv/trc/redirects.caddy"
-          $ssh_cmd "deploy@$HOST" sudo /usr/bin/systemctl reload caddy
+          $ssh_cmd "deploy@$HOST" sudo /usr/bin/systemctl reload-or-restart caddy

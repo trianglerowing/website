@@ -40,12 +40,22 @@ write_files:
       APT::Periodic::Update-Package-Lists "1";
       APT::Periodic::Unattended-Upgrade "1";
 
-  # The deploy user may reload the web server (to pick up new redirects) and
-  # nothing else as root.
+  # The deploy user may reload the web server (to pick up new redirects), or
+  # start it if it is stopped, and nothing else as root.
   - path: /etc/sudoers.d/deploy-caddy
     permissions: "0440"
     content: |
-      deploy ALL=(root) NOPASSWD: /usr/bin/systemctl reload caddy
+      deploy ALL=(root) NOPASSWD: /usr/bin/systemctl reload-or-restart caddy
+
+  # Caddy 2.6 (Debian's version) refuses to start when an imported file is
+  # empty, so the redirect list starts with one harmless redirect. The first
+  # deploy replaces it with the generated list.
+  - path: /srv/trc/redirects.caddy
+    permissions: "0644"
+    defer: true
+    content: |
+      # Placeholder until the first deploy uploads the generated list.
+      redir /index.htm / 301
 
   # Web server configuration. Root-owned on purpose: this server may also run
   # other club services (for example a password vault), so the website's
@@ -94,7 +104,6 @@ write_files:
 
 runcmd:
   - [mkdir, -p, /srv/trc/site]
-  - [touch, /srv/trc/redirects.caddy]
   - [chown, -R, "deploy:deploy", /srv/trc]
   - [ufw, default, deny, incoming]
   - [ufw, default, allow, outgoing]

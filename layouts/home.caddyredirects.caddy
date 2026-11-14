@@ -1,4 +1,6 @@
 # Generated from data/redirects.yaml by Hugo. Do not edit on the server.
+# The first line keeps the file non-empty: Caddy 2.6 refuses an empty import.
+redir /index.htm / 301
 {{- range $from, $to := hugo.Data.redirects }}
 {{- if and (hasPrefix $from "/") (ne $from $to) }}
 redir {{ $from }} {{ $to }} 301
