@@ -1,0 +1,52 @@
+{{- /* Responsive photo from assets/: WebP with a JPEG fallback, several widths.
+     Usage: partial "picture.html" (dict
+       "src"    "images/home/quad-racing.jpg"   path under assets/ (required)
+       "alt"    "What the photo shows"           required; never empty
+       "ratio"  "4:3"                            optional crop, width:height
+       "anchor" "Top"                            optional crop anchor (Hugo anchor name), default smart
+       "widths" (slice 480 800 1200)             optional
+       "sizes"  "(min-width: 60rem) 33vw, 100vw" optional
+       "eager"  true                             only for the first, above-the-fold photo
+       "class"  "mosaic__img")                   optional
+     Photos below the fold load lazily. */ -}}
+{{- $img := resources.Get .src }}
+{{- if not $img }}
+  {{- errorf "picture partial: no image %q under assets/" .src }}
+{{- end }}
+{{- if not .alt }}
+  {{- errorf "picture partial: image %q has no alt text" .src }}
+{{- end }}
+{{- $widths := .widths | default (slice 480 800 1200 1600) }}
+{{- $sizes := .sizes | default "100vw" }}
+{{- $ratio := .ratio }}
+{{- $anchor := .anchor | default "smart" }}
+{{- $webp := slice }}
+{{- $jpg := slice }}
+{{- $fallback := "" }}
+{{- range $widths }}
+  {{- $w := . }}
+  {{- if le $w $img.Width }}
+    {{- $spec := printf "%dx" $w }}
+    {{- $j := "" }}
+    {{- $p := "" }}
+    {{- if $ratio }}
+      {{- $parts := split $ratio ":" }}
+      {{- $h := int (math.Round (div (mul (float $w) (float (index $parts 1))) (float (index $parts 0)))) }}
+      {{- $j = $img.Fill (printf "%dx%d %s jpg q78" $w $h $anchor) }}
+      {{- $p = $img.Fill (printf "%dx%d %s webp q75" $w $h $anchor) }}
+    {{- else }}
+      {{- $j = $img.Resize (printf "%s jpg q78" $spec) }}
+      {{- $p = $img.Resize (printf "%s webp q75" $spec) }}
+    {{- end }}
+    {{- $jpg = $jpg | append (printf "%s %dw" $j.RelPermalink $j.Width) }}
+    {{- $webp = $webp | append (printf "%s %dw" $p.RelPermalink $p.Width) }}
+    {{- $fallback = $j }}
+  {{- end }}
+{{- end }}
+{{- if not $fallback }}
+  {{- errorf "picture partial: image %q is narrower than every requested width" .src }}
+{{- end }}
+<picture>
+  <source type="image/webp" srcset="{{ delimit $webp ", " }}" sizes="{{ $sizes }}">
+  <img src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $jpg ", " }}" sizes="{{ $sizes }}" width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ .alt }}"{{ with .class }} class="{{ . }}"{{ end }}{{ if .eager }} fetchpriority="high"{{ else }} loading="lazy" decoding="async"{{ end }}>
+</picture>

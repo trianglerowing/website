@@ -3,7 +3,7 @@ title: Start here
 description: A plain-language guide for parents whose child is new to rowing at Triangle Rowing Club, with a timeline of the first season.
 show_in_menu: true
 weight: 10
-menu_title: "Start here"
+menu_title: "New to rowing?"
 ---
 
 Your child wants to try rowing, or has just joined, and you have never been near a boat. This page is for you. Every rowing word is explained the first time it appears, and the [glossary](/new-to-rowing/glossary/) lists them all in one place.

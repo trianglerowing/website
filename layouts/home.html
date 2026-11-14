@@ -1,22 +1,93 @@
+{{- /* Home page. Text, figures and photos come from data/home.yaml
+     ("Club settings", "Home page" in the website editor); styles from
+     assets/css/home.css. Sections run full width, so baseof.html leaves
+     the home page out of its centered column. */ -}}
 {{ define "main" }}
-<div class="prose">
-  <h1>{{ .Title | default site.Title }}</h1>
-  {{ .Content }}
-</div>
+{{- $h := hugo.Data.home }}
 
-<section aria-labelledby="upcoming">
-  <h2 id="upcoming">Upcoming</h2>
-  {{ partial "upcoming-events.html" (dict "limit" 5) }}
+<section class="hero" aria-labelledby="hero-heading">
+  {{- with $h.hero }}
+  {{ partial "picture.html" (dict "src" .photo "alt" .alt "eager" true "class" "hero__img" "widths" (slice 640 960 1400 2000 2600)) }}
+  <div class="hero__inner wrap">
+    <p class="hero__kicker">{{ .kicker }}</p>
+    <h1 id="hero-heading" class="hero__headline">{{ .headline }}</h1>
+    <p class="hero__text">{{ .text }}</p>
+    <p class="actions">
+      <a class="button button--join button--xl" href="/join/">{{ .join_label }}</a>
+      <a class="button button--ghost" href="#video">{{ .video_label }}</a>
+    </p>
+  </div>
+  {{- end }}
+</section>
+
+<section class="stats" aria-label="Results">
+  <div class="wrap">
+    <ul class="stats__list">
+      {{- range $h.stats }}
+      <li><span class="stats__number">{{ .number }}</span> <span class="stats__label">{{ .label }}</span></li>
+      {{- end }}
+    </ul>
+    <p class="stats__more"><a href="{{ $h.stats_link }}">{{ $h.stats_link_label }}</a></p>
+  </div>
+</section>
+
+<section class="home-video" id="video" aria-labelledby="video-heading">
+  <div class="wrap">
+    {{- with $h.video }}
+    <h2 id="video-heading" class="display">{{ .heading }}</h2>
+    {{ partial "video.html" (dict "id" .id "title" .title "where" "data/home.yaml") }}
+    {{- end }}
+  </div>
+</section>
+
+<section class="mosaic" aria-labelledby="photos-heading">
+  <div class="wrap">
+    <h2 id="photos-heading" class="display">{{ $h.photos_heading }}</h2>
+    <ul class="mosaic__grid">
+      {{- range $i, $p := $h.photos }}
+      {{- $wide := eq (mod $i 3) 0 }}
+      <li class="mosaic__item{{ if $wide }} mosaic__item--wide{{ end }}">
+        {{ partial "picture.html" (dict "src" $p.photo "alt" $p.alt "anchor" $p.anchor "ratio" (cond $wide "16:9" "4:3") "widths" (slice 400 700 1000 1400) "sizes" (cond $wide "(min-width: 48rem) 66vw, 100vw" "(min-width: 48rem) 33vw, 50vw")) }}
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+
+<section class="newbie" aria-labelledby="newbie-heading">
+  <div class="wrap">
+    {{- with $h.new_to_rowing }}
+    <h2 id="newbie-heading" class="display">{{ .heading }}</h2>
+    <p>{{ .text }}</p>
+    <p><a class="button button--light button--xl" href="{{ .link }}">{{ .link_label }}</a></p>
+    {{- end }}
+  </div>
 </section>
 
 {{- with first 3 (where site.RegularPages "Section" "news") }}
-<section aria-labelledby="news">
-  <h2 id="news">News</h2>
-  <ul class="child-list">
-    {{- range . }}
-    <li><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong><br><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></a></li>
-    {{- end }}
-  </ul>
+<section class="home-news" aria-labelledby="news">
+  <div class="wrap">
+    <h2 id="news" class="display">News</h2>
+    <ul class="child-list">
+      {{- range . }}
+      <li><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong><br><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></a></li>
+      {{- end }}
+    </ul>
+  </div>
 </section>
 {{- end }}
+
+<section class="join-band" aria-labelledby="join-heading">
+  {{- with $h.join }}
+  {{ partial "picture.html" (dict "src" .photo "alt" .alt "class" "join-band__img" "widths" (slice 700 1000 1400)) }}
+  <div class="join-band__inner wrap">
+    <h2 id="join-heading" class="display">{{ .heading }}</h2>
+    <p>{{ .text }}</p>
+    <p class="actions">
+      <a class="button button--join button--xl" href="/join/">{{ .join_label }}</a>
+      <a class="button button--ghost" href="{{ .support_link }}">{{ .support_label }}</a>
+    </p>
+  </div>
+  {{- end }}
+</section>
 {{ end }}
