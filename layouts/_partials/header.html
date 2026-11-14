@@ -4,8 +4,11 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="{{ site.Home.RelPermalink }}">
-      {{- with resources.GetMatch "brand/shield.*" }}
-      <img src="{{ .RelPermalink }}" alt="" width="{{ .Width }}" height="{{ .Height }}">
+      {{- /* The header is navy, so it uses the shield made for blue backgrounds,
+           resized to 2x its 64px display height. */}}
+      {{- with resources.Get "brand/shield-on-blue.png" }}
+      {{- $img := .Resize "x128 png" }}
+      <img src="{{ $img.RelPermalink }}" alt="" width="{{ div $img.Width 2 }}" height="{{ div $img.Height 2 }}">
       {{- end }}
       <span>{{ site.Title }}</span>
     </a>
