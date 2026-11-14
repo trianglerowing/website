@@ -1,0 +1,11 @@
+{{- /* Board members from data/board/, ordered by weight.
+     Usage: {{< board >}} */ -}}
+{{- $list := slice }}
+{{- range hugo.Data.board }}{{ $list = $list | append . }}{{ end }}
+{{- if $list }}
+<ul class="board-list">
+  {{- range sort $list "weight" }}
+  <li><strong>{{ .name }}</strong>, {{ .role }}{{ with .email }} (<a href="mailto:{{ . }}">{{ . }}</a>){{ end }}</li>
+  {{- end }}
+</ul>
+{{- end }}

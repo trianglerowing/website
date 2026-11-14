@@ -1,0 +1,13 @@
+{{- /* Prints one value from data/settings.yaml by dotted key.
+     Usage: {{< setting "fees.sneak_peek_week" >}}
+     Fees, dates and season names live only in Club settings; pages print them
+     with this block so one edit updates every page. */ -}}
+{{- $key := .Get 0 }}
+{{- $v := hugo.Data.settings }}
+{{- range split $key "." }}
+  {{- if $v }}{{ $v = index $v . }}{{ end }}
+{{- end }}
+{{- if not $v }}
+  {{- errorf "setting shortcode on %s: no value for %q in data/settings.yaml" .Page.File.Path $key }}
+{{- end }}
+{{- $v | string -}}

@@ -31,11 +31,14 @@ To change where a button goes, edit **SportsEngine form link**. It must be a lin
 
 ## 3. Update fees and season dates
 
-1. Season name: **Club settings**, **Registration, donations and season**, field **Current season**. Save.
-2. Fees and dates are written in the page text. Open **Pages**, then the program page (for example Programs and costs, High school).
-3. Click in **Page text**, change the fee or date, and check the same figure on the Programs and costs overview page and the Financial aid page.
-4. Save each page you changed.
+1. Open **Club settings**, then **Registration, donations and season**.
+2. Season name: field **Current season**.
+3. Fees: open **Fees (printed on program pages)** and change the amount. Dates and deadlines: open **Dates and deadlines**. Volunteer requirement: open **Volunteer requirement**. Season windows are under **Season windows**.
+4. Save. Every page that shows the figure updates within a few minutes, so you do not edit page text for a fee or date.
 5. Check that the fee matches what SportsEngine charges. The website only describes the fee; SportsEngine charges it.
+6. A value that starts with `TODO(board)` is a question nobody has answered yet. Replace the whole value with the real answer.
+
+To show a settings value inside a page, type `{{</* setting "fees.sneak_peek_week" */>}}` where you want it. Never type a fee or date into page text.
 
 Donate button: in the same Club settings screen, **Donate button** holds **Button text** and **Donation link**.
 
@@ -56,12 +59,13 @@ To fix or remove a post, open it in **News**, edit and save, or delete it. A del
 
 ## 6. Change board members
 
-Board members are listed in page text, not in a separate list.
+Board members are a list of their own, shown on the About, Board page.
 
-1. Open **Pages**, then About, then the page that lists the board (use Contact if there is no board page yet).
-2. In **Page text**, edit the names and roles. Do not publish personal phone numbers or home addresses; use the club's role email addresses.
-3. Save.
-4. At each board change, also complete the access checklist in section 10.
+1. Open **Board members**.
+2. To add: choose New Board member, fill **Name**, **Role** and **Order (lower numbers first)**, and optionally a **Club role email address**. Save.
+3. To change: open the person, edit, save. To remove: open the person and delete.
+4. Do not publish personal phone numbers or home addresses; use the club's role email addresses.
+5. At each board change, also complete the access checklist in section 10.
 
 ## 7. Add a sponsor
 
@@ -92,6 +96,7 @@ Type these in **Page text** (in Markdown mode) where you want the block to appea
 |---|---|
 | `{{</* register program="sneak-peek-week" */>}}` | Register button for that program (uses the open/closed switch) |
 | `{{</* donate */>}}` | Donate button |
+| `{{</* setting "fees.sneak_peek_week" */>}}` | A fee, date or other value from Club settings |
 | `{{</* calendar feed="high-school" limit="10" */>}}` | Upcoming events |
 | `{{</* video id="VIDEO_ID" title="What it shows" */>}}` | YouTube video |
 | `{{</* embed src="https://..." title="What it shows" height="600" */>}}` | Another web page inside the page |
