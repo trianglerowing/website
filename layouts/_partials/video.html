@@ -1,0 +1,12 @@
+{{- /* YouTube video, loaded from youtube-nocookie.com. Used by the video
+     shortcode and by layouts that show a video.
+     Usage: partial "video.html" (dict "id" "RNblDvboIq0" "title" "Team video" "where" .File.Path)
+     id is the part after "v=" in a YouTube link; where names the page for error messages. */ -}}
+{{- $id := .id }}
+{{- $title := .title | default "Video" }}
+{{- if not (findRE `^[A-Za-z0-9_-]{6,20}$` $id) }}
+  {{- errorf "video on %s: id %q is not a YouTube video id" .where $id }}
+{{- end }}
+<div class="embed embed--video">
+  <iframe src="https://www.youtube-nocookie.com/embed/{{ $id }}" title="{{ $title }}" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+</div>

@@ -1,11 +1,5 @@
 {{- /* YouTube video, loaded from youtube-nocookie.com.
      Usage: {{< video id="dQw4w9WgXcQ" title="Erg-a-thon 2026 highlights" >}}
-     id is the part after "v=" in a YouTube link. */ -}}
-{{- $id := .Get "id" }}
-{{- $title := .Get "title" | default "Video" }}
-{{- if not (findRE `^[A-Za-z0-9_-]{6,20}$` $id) }}
-  {{- errorf "video shortcode on %s: id %q is not a YouTube video id" .Page.File.Path $id }}
-{{- end }}
-<div class="embed embed--video">
-  <iframe src="https://www.youtube-nocookie.com/embed/{{ $id }}" title="{{ $title }}" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-</div>
+     id is the part after "v=" in a YouTube link. The markup lives in
+     layouts/_partials/video.html so the home page can use it too. */ -}}
+{{- partial "video.html" (dict "id" (.Get "id") "title" (.Get "title") "where" .Page.File.Path) }}

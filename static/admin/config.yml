@@ -200,6 +200,70 @@ collections:
               - { name: label, label: Button text, widget: string }
               - { name: url, label: SportsEngine form link, widget: string, pattern: ['^https://[a-z0-9-]+\.sportngin\.com/', 'Must be a SportsEngine link on sportngin.com'] }
               - { name: open, label: Registration open, widget: boolean }
+      - name: home
+        label: Home page
+        file: data/home.yaml
+        format: yaml
+        # Photos are files in assets/images/home/ in the repository, resized at
+        # build time; the editor changes their alt text, not the files.
+        fields:
+          - name: hero
+            label: Top of the page
+            widget: object
+            fields:
+              - { name: kicker, label: Small line above the headline, widget: string }
+              - { name: headline, label: Headline (five words or fewer), widget: string }
+              - { name: text, label: One sentence under the headline, widget: string }
+              - { name: photo, label: Photo file (in assets/images/home), widget: string }
+              - { name: alt, label: Photo description for screen readers, widget: string }
+              - { name: join_label, label: Join button text, widget: string }
+              - { name: video_label, label: Video button text, widget: string }
+          - name: stats
+            label: Results figures (keep in step with the Achievements page)
+            label_singular: Figure
+            widget: list
+            summary: "{{number}} {{label}}"
+            fields:
+              - { name: number, label: Number, widget: string }
+              - { name: label, label: What it counts, widget: string }
+          - { name: stats_link, label: Results link, widget: string }
+          - { name: stats_link_label, label: Results link text, widget: string }
+          - name: video
+            label: Video
+            widget: object
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: id, label: YouTube video id (the part after v= in the link), widget: string }
+              - { name: title, label: Video description for screen readers, widget: string }
+          - { name: photos_heading, label: Photo section heading, widget: string }
+          - name: photos
+            label: Photos
+            label_singular: Photo
+            widget: list
+            summary: "{{alt}}"
+            fields:
+              - { name: photo, label: Photo file (in assets/images/home), widget: string }
+              - { name: alt, label: Photo description for screen readers, widget: string }
+              - { name: anchor, label: Crop toward (optional), widget: select, options: [Top, Center, Bottom, Left, Right], required: false }
+          - name: new_to_rowing
+            label: New to rowing band
+            widget: object
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: text, label: Text, widget: string }
+              - { name: link, label: Button link, widget: string }
+              - { name: link_label, label: Button text, widget: string }
+          - name: join
+            label: Join band at the bottom
+            widget: object
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: text, label: Text, widget: string }
+              - { name: photo, label: Photo file (in assets/images/home), widget: string }
+              - { name: alt, label: Photo description for screen readers, widget: string }
+              - { name: join_label, label: Join button text, widget: string }
+              - { name: support_label, label: Second button text, widget: string }
+              - { name: support_link, label: Second button link, widget: string }
       - name: glossary
         label: Rowing glossary
         file: data/glossary.yaml

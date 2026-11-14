@@ -21,9 +21,20 @@ The brand guide lists white's web color as #000000. That is an error (black); wh
 | Use | Font | License | Source |
 |---|---|---|---|
 | Body text | Urbanist (Regular, Italic, SemiBold, Bold) | SIL Open Font License 1.1 (`static/fonts/Urbanist-OFL.txt`) | https://github.com/coreyhu/Urbanist (official WOFF2 in `fonts/webfonts`) |
-| Headings | Open decision. Proposed: Source Sans 3. Urbanist in use meanwhile. | Source Sans 3: SIL Open Font License 1.1 | https://github.com/adobe-fonts/source-sans |
+| Headings | League Gothic 1.601 (Regular) | SIL Open Font License 1.1 (`static/fonts/LeagueGothic-OFL.md`) | https://github.com/theleagueof/league-gothic (official release, `static/WOFF2`) |
 
 The guide's body-font line is a placeholder ("XYZ font"). Urbanist is the default pending a club decision.
+
+Headings are League Gothic, a condensed athletic face the old trianglerowing.org site already used, set in capitals at large sizes (Pace work package 2502, home page redesign: https://pace.demar.co/work_packages/2502). It has one weight, so headings are never bolded. It is set once as `--font-heading` in `assets/css/main.css`.
+
+## Text on color
+
+Brand orange (#E87722) on white is 2.96:1 and navy on orange is 4.09:1, both below the 4.5:1 WCAG AA minimum for normal text. So:
+
+- Orange text on white uses #B35500.
+- Orange buttons carry navy text in League Gothic at 2rem or larger (WCAG large text, 3:1 minimum).
+- Orange figures on navy are display size only.
+- White text on a photo sits on a navy overlay at least 70% opaque.
 
 All fonts are self-hosted WOFF2 under `static/fonts/` and declared in `assets/css/fonts.css`. The site loads nothing from Google Fonts or Adobe Fonts.
 
@@ -39,7 +50,7 @@ Aller (Dalton Maag) is the official club font, and the logo uses Aller Display. 
 
 Decision: no Aller files are in the repository. Adobe Fonts also licenses web use only through an Adobe subscription and loads from Adobe servers, which breaks the no-third-party-requests rule. Aller remains usable for print; the logo artwork is outlined shapes and needs no font.
 
-Open decision (club): heading font. Proposed: Source Sans 3, a humanist sans under the SIL Open Font License with similar proportions (alternatives: Lato, Cabin, both OFL). Urbanist is used for headings until decided.
+Aller stays the print and logo font; League Gothic is the web heading font.
 
 ## Logos
 
@@ -62,6 +73,8 @@ Logo files in `assets/brand/`:
 
 Not imported: the Erg-a-thon, winter holiday, oar blade and North Carolina map logos exist only as Illustrator files in Drive (no web export). Illustrator source files are not committed. Export web versions in Drive if needed.
 
-Fonts in `static/fonts/`: `Urbanist-Regular.woff2`, `Urbanist-Italic.woff2`, `Urbanist-SemiBold.woff2`, `Urbanist-Bold.woff2`, `Urbanist-OFL.txt`.
+Fonts in `static/fonts/`: `LeagueGothic-Regular.woff2`, `LeagueGothic-OFL.md`, `Urbanist-Regular.woff2`, `Urbanist-Italic.woff2`, `Urbanist-SemiBold.woff2`, `Urbanist-Bold.woff2`, `Urbanist-OFL.txt`.
+
+Home page photos are in `assets/images/home/` (from the old SportsEngine site, board-approved; see `docs/photo-review.md`). Hugo resizes them at build time into WebP and JPEG at several widths; text, figures and alt text are in `data/home.yaml`.
 
 Stylesheet: `assets/css/fonts.css` (font-face rules only).

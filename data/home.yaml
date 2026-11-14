@@ -1,0 +1,63 @@
+# Home page text, figures and photos, edited in the website editor under
+# "Club settings", "Home page". layouts/home.html reads this file.
+# Keep it short: the home page sells the club with photos, not paragraphs.
+# Photos live in assets/images/home/ and are resized by Hugo at build time.
+# Every photo needs alt text that says what the photo shows.
+
+hero:
+  kicker: "Triangle Rowing Club · Raleigh, NC"
+  headline: "Row with us."
+  text: "Middle and high school rowing on Lake Wheeler. No experience needed."
+  photo: "images/home/eight-overhead-racing.jpg"
+  alt: "A Triangle Rowing Club eight seen from above, oars splashing as the crew drives through a race"
+  join_label: "Join the team"
+  video_label: "Watch us race"
+
+# Figures from the Achievements page (content/pages/about/achievements).
+# Update both places together.
+stats:
+  - number: "46"
+    label: "Boats at Youth Nationals"
+  - number: "4"
+    label: "US Junior National Team rowers"
+  - number: "45"
+    label: "Colleges where alumni rowed"
+stats_link: "/about/achievements/"
+stats_link_label: "See our results"
+
+video:
+  heading: "See us race"
+  id: "RNblDvboIq0"
+  title: "Triangle Rowing Club team video"
+
+photos_heading: "Practice. Race. Repeat."
+photos:
+  - photo: "images/home/carrying-the-boat.jpg"
+    alt: "Rowers in orange and navy club uniforms carry their boat overhead to the dock"
+  - photo: "images/home/quad-racing.jpg"
+    alt: "Four rowers in a quad drive their oars through the water at a regatta"
+  - photo: "images/home/eight-celebrating.jpg"
+    alt: "A Triangle Rowing Club eight raises their arms after crossing the finish line"
+  - photo: "images/home/middle-school-four.jpg"
+    alt: "A middle school four in orange shirts rows past the trees on the lake"
+  - photo: "images/home/middle-school-heart.jpg"
+    alt: "A middle school rower makes a heart with their hands while the crew sits ready in the boat"
+    # Optional crop anchor: Top, Center, Bottom, Left, Right (default: Hugo picks)
+    anchor: "Top"
+  - photo: "images/home/dogwood-finals-eight.jpg"
+    alt: "A Triangle Rowing Club eight races in the finals at the Dogwood Junior Championships"
+
+new_to_rowing:
+  heading: "New to rowing? Start here."
+  text: "Most of our rowers had never sat in a boat. Our coaches teach every stroke, from the dock to the finish line."
+  link: "/new-to-rowing/"
+  link_label: "Start here"
+
+join:
+  heading: "Join the crew."
+  text: "Grades 6 to 12. Every season. Every level."
+  photo: "images/home/high-point-2026-team.jpg"
+  alt: "The Triangle Rowing Club team gathered under their boat at the High Point regatta, 2026"
+  join_label: "Join the team"
+  support_label: "Support the club"
+  support_link: "/support/"
