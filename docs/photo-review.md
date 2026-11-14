@@ -1,6 +1,8 @@
-# Photos held back for review
+# Photos from the previous site
 
 Pace work package 2491 (Migrate and correct current SportsEngine page content): https://pace.demar.co/work_packages/2491
+
+**Status: approved.** Every photo below was published on the previous trianglerowing.org (SportsEngine) site, and the board approved all of them for the new site (decision recorded in `docs/decisions/0001-platform-and-hosting.md`). They can be downloaded into the repository and used. The text below describes the original hold-back, kept for the record.
 
 The repository is public and keeps history, so photos that may show identifiable minors are not committed. Each is listed here with its source URL (on the old SportsEngine image host, which disappears when the SportsEngine pages are removed) and the page that used it. A board member decides per photo: get written parent or guardian consent and then add it through the website editor, replace it with a photo from behind or far away, or leave it out. Alt text and image content could not be viewed by the agent that built this list, so "likely" means the filename or caption suggests people.
 
