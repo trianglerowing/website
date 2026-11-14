@@ -79,6 +79,21 @@ collections:
       - { name: photo, label: Photo, widget: image, required: false }
       - { name: bio, label: Biography, widget: markdown, required: false }
 
+  - name: board
+    label: Board members
+    label_singular: Board member
+    description: "Shown on the About, Board page. Use club role email addresses, never personal phone numbers or home addresses. New to editing? Read the editor guide: https://github.com/trianglerowing/website/blob/main/docs/editor-guide.md"
+    folder: data/board
+    format: yaml
+    extension: yaml
+    create: true
+    identifier_field: name
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: role, label: Role (for example Treasurer), widget: string }
+      - { name: email, label: Club role email address, widget: string, required: false }
+      - { name: weight, label: Order (lower numbers first), widget: number, value_type: int, default: 50 }
+
   - name: sponsors
     label: Sponsors
     label_singular: Sponsor
@@ -91,6 +106,7 @@ collections:
     fields:
       - { name: name, label: Name, widget: string }
       - { name: level, label: Level, widget: select, options: [Platinum, Gold, Silver Oar, Bronze Oar, Supporter] }
+      - { name: note, label: Sponsor role (for example Official Restaurant Sponsor), widget: string, required: false }
       - { name: url, label: Website, widget: string, required: false }
       - { name: logo, label: Logo, widget: image, required: false }
 
@@ -104,6 +120,55 @@ collections:
         format: yaml
         fields:
           - { name: season_label, label: Current season, widget: string }
+          - name: seasons
+            label: Season windows
+            widget: object
+            fields:
+              - { name: fall, label: Fall season, widget: string }
+              - { name: spring, label: Spring season, widget: string }
+          - name: fees
+            label: Fees (printed on program pages)
+            widget: object
+            fields:
+              - { name: high_school_dues, label: High school season dues, widget: string }
+              - { name: middle_school_dues, label: Middle school season dues, widget: string }
+              - { name: off_season_high_school, label: High school off-season dues range, widget: string }
+              - { name: off_season_middle_school, label: Middle school off-season dues range, widget: string }
+              - { name: summer_training_high_school, label: High school summer training, per session, widget: string }
+              - { name: summer_training_middle_school, label: Middle school summer training, per session, widget: string }
+              - { name: sneak_peek_week, label: Sneak Peek Week fee, widget: string }
+              - { name: learn_to_row_per_week, label: Learn to Row, per week, widget: string }
+              - { name: learn_to_row_session_change, label: Learn to Row session change fee, widget: string }
+              - { name: learn_to_row_cancellation, label: Learn to Row cancellation fee, widget: string }
+              - { name: volunteer_opt_out, label: Volunteer opt-out fee, widget: string }
+          - name: volunteer
+            label: Volunteer requirement
+            widget: object
+            fields:
+              - { name: tokens_per_high_school_rower, label: Volunteer tokens per high school rower, widget: string }
+          - name: dates
+            label: Dates and deadlines
+            widget: object
+            fields:
+              - { name: sneak_peek_week, label: Sneak Peek Week dates, widget: string }
+              - { name: learn_to_row_sessions, label: Learn to Row session dates, widget: string }
+              - { name: tuition_reduction_returning_deadline, label: Tuition reduction deadline, returning families, widget: string }
+              - { name: tuition_reduction_new_deadline, label: Tuition reduction deadline, new families, widget: string }
+              - { name: erg_a_thon, label: Erg-A-Thon date, widget: string }
+          - name: fundraising
+            label: Fundraising figures and links
+            widget: object
+            fields:
+              - { name: erg_a_thon_goal, label: Erg-A-Thon goal, widget: string }
+              - { name: erg_a_thon_url, label: Erg-A-Thon donation link, widget: string }
+              - { name: sustainer_goal_per_rower_per_month, label: Monthly giving goal per rower per month, widget: string }
+              - { name: sustainer_annual_goal, label: Monthly giving yearly goal, widget: string }
+          - name: links
+            label: Other links
+            widget: object
+            fields:
+              - { name: member_login, label: Family sign-in link (SportsEngine), widget: string, pattern: ['^https://[a-z0-9-]+\.sportngin\.com/', 'Must be a SportsEngine link on sportngin.com'] }
+              - { name: tuition_reduction_application, label: Tuition reduction application form link, widget: string }
           - name: donate
             label: Donate button
             widget: object

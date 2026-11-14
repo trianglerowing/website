@@ -5,6 +5,49 @@
 
 season_label: "TODO(board): current season name, for example Spring 2027"
 
+# Season windows used in program descriptions.
+seasons:
+  fall: "mid-August to early November"
+  spring: "mid-February to mid-May"
+
+# Fees. Pages print these with the setting shortcode, so one edit here updates
+# every page. Dues are the most recent season's figures; check them each season.
+fees:
+  high_school_dues: "$1,695"
+  middle_school_dues: "$525"
+  off_season_high_school: "$165 to $275"
+  off_season_middle_school: "$180 to $250"
+  summer_training_high_school: "$230"
+  summer_training_middle_school: "$175"
+  sneak_peek_week: "$10"
+  learn_to_row_per_week: "$285"
+  learn_to_row_session_change: "$25"
+  learn_to_row_cancellation: "$50"
+  volunteer_opt_out: "$800"
+
+# Volunteer requirement. The old site said both 40 and 20 tokens per high school rower.
+volunteer:
+  tokens_per_high_school_rower: "TODO(board): how many volunteer tokens does each high school rower's family owe per season? The old volunteering page said both 40 and 20."
+
+# Dates that change each season.
+dates:
+  sneak_peek_week: "TODO(board): fall Sneak Peek Week dates for the next season (the old page showed August and September 2026, which have passed)"
+  learn_to_row_sessions: "TODO(board): Learn to Row session dates for summer 2027 (the old page showed 2026 sessions, which have passed)"
+  tuition_reduction_returning_deadline: "TODO(board): deadline for returning families to apply for tuition reduction (the old page gave August 17 with no year)"
+  tuition_reduction_new_deadline: "TODO(board): deadline for new families to apply for tuition reduction (the old page gave September 6 with no year)"
+  erg_a_thon: "TODO(board): Erg-A-Thon date"
+
+fundraising:
+  erg_a_thon_goal: "$50,000"
+  erg_a_thon_url: "https://givebutter.com/c/erg-a-thon2026"
+  sustainer_goal_per_rower_per_month: "$25"
+  sustainer_annual_goal: "$30,000"
+
+links:
+  # Sign-in for families. SportsEngine redirects this to its own sign-in page.
+  member_login: "https://triangle-rowing-club.sportngin.com/login"
+  tuition_reduction_application: "https://docs.google.com/forms/d/e/1FAIpQLScDuYG1ujOkeKAMotelMWkY8t8br00qPWqc4Tp9b3xL4Y5sOg/viewform?usp=dialog"
+
 donate:
   label: "Donate"
   url: "https://givebutter.com/triangle-rowing-club"
@@ -49,4 +92,8 @@ registration:
   - key: interest
     label: "Tell us you're interested"
     url: "https://triangle-rowing-club.sportngin.com/register/form/827812930"
+    open: true
+  - key: background-check
+    label: "Register for a volunteer background check"
+    url: "https://triangle-rowing-club.sportngin.com/register/form/270278506"
     open: true

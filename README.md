@@ -25,9 +25,9 @@ There is no npm, no theme module and no other build dependency, on purpose: they
 |---|---|
 | `content/pages/` | Every page; folder layout is the URL layout (`programs/high-school/_index.md` → `/programs/high-school/`) |
 | `content/news/` | News posts |
-| `data/settings.yaml` | Registration links and open/closed switches, donation link, season name |
+| `data/settings.yaml` | Registration links and open/closed switches, fees, season dates, donation link, season name |
 | `data/glossary.yaml` | Rowing terms |
-| `data/coaches/`, `data/sponsors/` | One file per coach or sponsor |
+| `data/coaches/`, `data/sponsors/`, `data/board/` | One file per coach, sponsor or board member |
 | `layouts/` | Page templates; `_shortcodes/` holds the blocks editors insert |
 | `assets/css/main.css` | Brand colors and fonts, set once at the top |
 | `static/admin/` | Editor configuration |
@@ -38,6 +38,7 @@ There is no npm, no theme module and no other build dependency, on purpose: they
 | Block | Example |
 |---|---|
 | Registration button | `{{</* register program="sneak-peek-week" */>}}` |
+| Value from Club settings (fee, date) | `{{</* setting "fees.sneak_peek_week" */>}}` |
 | Donate button | `{{</* donate */>}}` |
 | Upcoming events | `{{</* calendar feed="high-school" limit="10" */>}}` |
 | YouTube video | `{{</* video id="VIDEO_ID" title="What it shows" */>}}` |

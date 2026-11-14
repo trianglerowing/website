@@ -1,0 +1,21 @@
+{{- /* Sponsors from data/sponsors/, grouped by level.
+     Usage: {{< sponsors >}} */ -}}
+{{- $list := slice }}
+{{- range hugo.Data.sponsors }}{{ $list = $list | append . }}{{ end }}
+{{- range $level := slice "Platinum" "Gold" "Silver Oar" "Bronze Oar" "Supporter" }}
+  {{- $group := where $list "level" $level }}
+  {{- if $group }}
+<h3>{{ $level }} sponsors</h3>
+<ul class="sponsor-list">
+    {{- range $s := sort $group "name" }}
+  <li>
+    {{- if $s.url }}<a href="{{ $s.url }}">{{ end }}
+    {{- with $s.logo }}<img src="{{ . }}" alt="{{ $s.name }} logo" width="180" loading="lazy"><br>{{ end }}
+    <strong>{{ $s.name }}</strong>
+    {{- if $s.url }}</a>{{ end }}
+    {{- with $s.note }}<br>{{ . }}{{ end }}
+  </li>
+    {{- end }}
+</ul>
+  {{- end }}
+{{- end }}

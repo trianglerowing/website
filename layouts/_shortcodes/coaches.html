@@ -1,0 +1,14 @@
+{{- /* Coaches from data/coaches/, one file per coach, ordered by weight.
+     Usage: {{< coaches >}} */ -}}
+{{- $list := slice }}
+{{- range hugo.Data.coaches }}{{ $list = $list | append . }}{{ end }}
+<div class="people">
+  {{- range $c := sort $list "weight" }}
+  <section class="person">
+    {{- with $c.photo }}<img src="{{ . }}" alt="Coach {{ $c.name }}" loading="lazy">{{ end }}
+    <h3>{{ $c.name }}</h3>
+    <p><strong>{{ $c.role }}</strong></p>
+    {{- with $c.bio }}{{ . | markdownify }}{{ end }}
+  </section>
+  {{- end }}
+</div>
