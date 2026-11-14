@@ -41,7 +41,7 @@ Registration, payments, rosters and member logins run on SportsEngine for the wh
 
 ## Constraints that follow
 
-- **Photos of minors:** the public repository keeps history after a file is removed. Full galleries live in an external club photo album; the repository holds only selected, consented images. A photo policy is set before launch.
+- **Photos of minors:** the public repository keeps history after a file is removed. Full galleries live in an external club photo album; the repository holds only selected, consented images. Decision (Nick DeMarco for the board, 2026-11-14): every photo already published on the previous trianglerowing.org (SportsEngine) site is approved for the new site. Any other photo showing an identifiable minor needs written parent or guardian consent first.
 - **Editors** need a GitHub account and an invite to the organization. A one-page editor guide is part of launch.
 - **Access review** at each board turnover: domain registrar, GitHub organization owners, Hetzner account.
 

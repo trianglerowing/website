@@ -84,7 +84,7 @@ Swap a photo:
 
 Photo policy:
 
-1. No identifiable minors without consent. If a rower under 18 can be recognized, you need written consent from a parent or guardian first. If unsure, leave the photo out. Photos from behind, from far away on the water, or of boats and oars are fine.
+1. No identifiable minors without consent. Photos already published on the club's previous website (trianglerowing.org on SportsEngine) are approved by the board and may be used. For any other photo where a rower under 18 can be recognized, you need written consent from a parent or guardian first. If unsure, leave the photo out. Photos from behind, from far away on the water, or of boats and oars are fine.
 2. Full galleries go to the club photo album, not the website. Put only a few selected photos on the site.
 3. Anything removed from the site stays in the public repository history. Deleting a photo hides it from the site but does not erase it, so check before you upload. If a photo must be erased completely, ask the site owner (section 11) right away.
 
