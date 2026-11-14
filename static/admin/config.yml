@@ -115,6 +115,16 @@ collections:
             widget: object
             fields:
               - { name: url, label: Calendar page link, widget: string }
+              - name: feeds
+                label: Calendar feeds
+                label_singular: Calendar feed
+                widget: list
+                summary: "{{label}}"
+                fields:
+                  - { name: name, label: Short name (used for the data file, letters and dashes), widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and dashes only'] }
+                  - { name: label, label: Calendar name shown on the page, widget: string }
+                  - { name: ical_url, label: iCal feed link (read when the site is built), widget: string }
+                  - { name: subscribe_url, label: Subscribe link shown to families, widget: string }
           - name: registration
             label: Registration links
             label_singular: Program

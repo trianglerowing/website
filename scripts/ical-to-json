@@ -1,0 +1,370 @@
+#!/usr/bin/env python3
+"""Convert the club's iCal feeds to data/events/<feed>.json for Hugo.
+
+Feeds are listed in data/settings.yaml under calendar.feeds. Each output file
+is a list of {title, start, end, location, feed, all_day}; start and end are
+RFC 3339 in UTC. Events that ended more than 7 days ago are dropped, and
+recurring events are expanded up to a year ahead.
+
+A feed that cannot be fetched or parsed keeps its existing JSON file. The
+script always exits 0 so a feed outage never fails the site build.
+
+Usage: scripts/ical-to-json [--settings FILE] [--out DIR]
+Python 3 standard library only.
+"""
+import argparse
+import calendar
+import json
+import os
+import re
+import sys
+import tempfile
+import urllib.request
+from datetime import date, datetime, timedelta, timezone
+
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:  # pragma: no cover
+    ZoneInfo = None
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_TZ = "America/New_York"
+KEEP_DAYS = 7
+HORIZON_DAYS = 400
+WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+
+
+def log(msg):
+    print("ical-to-json: " + msg, file=sys.stderr)
+
+
+def read_feeds(settings_path):
+    """Read calendar.feeds from settings.yaml without a YAML library.
+
+    Expects the layout in data/settings.yaml: a `calendar:` mapping with a
+    `feeds:` list of `- key: value` items.
+    """
+    feeds, cur = [], None
+    in_cal = in_feeds = False
+    with open(settings_path, encoding="utf-8") as fh:
+        for raw in fh:
+            line = raw.rstrip("\n")
+            if not line.strip() or line.lstrip().startswith("#"):
+                continue
+            indent = len(line) - len(line.lstrip())
+            text = line.strip()
+            if indent == 0:
+                in_cal = text == "calendar:"
+                in_feeds = False
+                continue
+            if not in_cal:
+                continue
+            if indent == 2:
+                in_feeds = text == "feeds:"
+                continue
+            if not in_feeds:
+                continue
+            if text.startswith("- "):
+                cur = {}
+                feeds.append(cur)
+                text = text[2:]
+            if cur is None or ":" not in text:
+                continue
+            key, _, val = text.partition(":")
+            val = val.strip()
+            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
+                val = val[1:-1]
+            cur[key.strip()] = val
+    return [f for f in feeds if f.get("name") and f.get("ical_url")]
+
+
+def fetch(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "trc-website-calendar/1"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read().decode("utf-8", errors="replace")
+
+
+def unfold(text):
+    out = []
+    for line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+        if line[:1] in (" ", "\t") and out:
+            out[-1] += line[1:]
+        else:
+            out.append(line)
+    return out
+
+
+def unescape(s):
+    return re.sub(r"\\([nN,;\\])", lambda m: "\n" if m.group(1) in "nN" else m.group(1), s)
+
+
+def parse_line(line):
+    name_part, _, value = line.partition(":")
+    # A quoted parameter may contain ':'; iCal feeds seen here do not.
+    bits = name_part.split(";")
+    params = {}
+    for p in bits[1:]:
+        k, _, v = p.partition("=")
+        params[k.upper()] = v.strip('"')
+    return bits[0].upper(), params, value
+
+
+def tzinfo(name):
+    if name in (None, "UTC", "Z"):
+        return timezone.utc
+    if ZoneInfo:
+        try:
+            return ZoneInfo(name)
+        except Exception:
+            pass
+    return ZoneInfo(DEFAULT_TZ) if ZoneInfo else timezone.utc
+
+
+def parse_dt(value, params):
+    """Return (datetime-or-date, all_day). Datetimes are timezone-aware."""
+    value = value.strip()
+    if params.get("VALUE") == "DATE" or re.fullmatch(r"\d{8}", value):
+        return datetime.strptime(value[:8], "%Y%m%d").date(), True
+    utc = value.endswith("Z")
+    naive = datetime.strptime(value.rstrip("Z"), "%Y%m%dT%H%M%S")
+    tz = timezone.utc if utc else tzinfo(params.get("TZID") or DEFAULT_TZ)
+    return naive.replace(tzinfo=tz), False
+
+
+def parse_events(text):
+    events, cur = [], None
+    for line in unfold(text):
+        if line == "BEGIN:VEVENT":
+            cur = {"EXDATE": []}
+        elif line == "END:VEVENT":
+            if cur is not None:
+                events.append(cur)
+            cur = None
+        elif cur is not None and line:
+            name, params, value = parse_line(line)
+            if name == "EXDATE":
+                cur["EXDATE"].append((value, params))
+            elif name in ("DTSTART", "DTEND", "RECURRENCE-ID", "RRULE", "UID",
+                          "SUMMARY", "LOCATION", "STATUS", "DURATION"):
+                cur[name] = (value, params)
+    return events
+
+
+def parse_rrule(value):
+    rule = dict(p.split("=", 1) for p in value.split(";") if "=" in p)
+    byday = []
+    for d in rule.get("BYDAY", "").split(","):
+        m = re.fullmatch(r"([+-]?\d+)?(MO|TU|WE|TH|FR|SA|SU)", d.strip())
+        if m:
+            byday.append((int(m.group(1)) if m.group(1) else 0, WEEKDAYS.index(m.group(2))))
+    return {
+        "freq": rule.get("FREQ", ""),
+        "interval": int(rule.get("INTERVAL", "1")),
+        "count": int(rule["COUNT"]) if "COUNT" in rule else None,
+        "until": rule.get("UNTIL"),
+        "byday": byday,
+        "bymonth": [int(x) for x in rule.get("BYMONTH", "").split(",") if x],
+        "bymonthday": [int(x) for x in rule.get("BYMONTHDAY", "").split(",") if x],
+        "wkst": WEEKDAYS.index(rule.get("WKST", "MO")),
+    }
+
+
+def week_start(d, wkst):
+    return d - timedelta(days=(d.weekday() - wkst) % 7)
+
+
+def day_matches(d, start_d, r):
+    iv = r["interval"]
+    f = r["freq"]
+    if f == "DAILY":
+        return (d - start_d).days % iv == 0
+    if f == "WEEKLY":
+        weeks = (week_start(d, r["wkst"]) - week_start(start_d, r["wkst"])).days // 7
+        days = [w for _, w in r["byday"]] or [start_d.weekday()]
+        return weeks % iv == 0 and d.weekday() in days
+    if f in ("MONTHLY", "YEARLY"):
+        if f == "MONTHLY":
+            if ((d.year - start_d.year) * 12 + d.month - start_d.month) % iv:
+                return False
+            if r["bymonth"] and d.month not in r["bymonth"]:
+                return False
+        else:
+            if (d.year - start_d.year) % iv:
+                return False
+            if d.month not in (r["bymonth"] or [start_d.month]):
+                return False
+        if r["byday"]:
+            dim = calendar.monthrange(d.year, d.month)[1]
+            for n, wd in r["byday"]:
+                if d.weekday() != wd:
+                    continue
+                if n == 0 or n == (d.day - 1) // 7 + 1 or n == -((dim - d.day) // 7 + 1):
+                    return True
+            return False
+        if r["bymonthday"]:
+            dim = calendar.monthrange(d.year, d.month)[1]
+            return d.day in r["bymonthday"] or (d.day - dim - 1) in r["bymonthday"]
+        return d.day == start_d.day
+    return False
+
+
+def to_utc(dt, all_day):
+    if all_day:
+        dt = datetime.combine(dt, datetime.min.time(), tzinfo=tzinfo(DEFAULT_TZ))
+    return dt.astimezone(timezone.utc)
+
+
+def iso(dt):
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def expand(ev, win_start, win_end):
+    """Yield (start_utc, end_utc, all_day, original_start_utc) for one VEVENT."""
+    if "DTSTART" not in ev:
+        return
+    dstart, all_day = parse_dt(*ev["DTSTART"])
+    if "DTEND" in ev:
+        dend, _ = parse_dt(*ev["DTEND"])
+        length = dend - dstart
+    elif "DURATION" in ev:
+        m = re.fullmatch(r"P(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?",
+                         ev["DURATION"][0])
+        g = [int(x or 0) for x in m.groups()] if m else [0] * 5
+        length = timedelta(weeks=g[0], days=g[1], hours=g[2], minutes=g[3], seconds=g[4])
+    else:
+        length = timedelta(days=1) if all_day else timedelta(0)
+    if all_day and length <= timedelta(0):
+        length = timedelta(days=1)
+
+    def occ(start):
+        if all_day:
+            s = to_utc(start, True)
+            e = to_utc(start + length, True)
+        else:
+            s = start.astimezone(timezone.utc)
+            e = (start + length).astimezone(timezone.utc)
+        return s, e, all_day, s
+
+    if "RRULE" not in ev:
+        yield occ(dstart)
+        return
+
+    r = parse_rrule(ev["RRULE"][0])
+    start_d = dstart if all_day else dstart.date()
+    tz = None if all_day else dstart.tzinfo
+    until = None
+    if r["until"]:
+        u, u_all = parse_dt(r["until"], {})
+        until = u if u_all else u.astimezone(timezone.utc).astimezone(tz or timezone.utc).date()
+        if u_all:
+            until = u
+    excluded = set()
+    for value, params in ev["EXDATE"]:
+        for part in value.split(","):
+            x, x_all = parse_dt(part, params)
+            excluded.add(x if x_all else x.astimezone(timezone.utc))
+    last = (win_end + timedelta(days=1)).date()
+    d, n = start_d, 0
+    while d <= last:
+        if until is not None and d > until:
+            break
+        if day_matches(d, start_d, r):
+            n += 1
+            if all_day:
+                start = d
+            else:
+                start = datetime.combine(d, dstart.timetz().replace(tzinfo=None), tzinfo=tz)
+            key = start if all_day else start.astimezone(timezone.utc)
+            if key not in excluded:
+                yield occ(start)
+            if r["count"] is not None and n >= r["count"]:
+                break
+        d += timedelta(days=1)
+
+
+def convert(text, feed_name, now):
+    events = parse_events(text)
+    if "BEGIN:VCALENDAR" not in text:
+        raise ValueError("not an iCal document")
+    keep_from = now - timedelta(days=KEEP_DAYS)
+    horizon = now + timedelta(days=HORIZON_DAYS)
+    overrides, masters = {}, []
+    for ev in events:
+        if "RECURRENCE-ID" in ev:
+            rid, rid_all = parse_dt(*ev["RECURRENCE-ID"])
+            key = (ev.get("UID", ("",))[0], to_utc(rid, rid_all))
+            overrides[key] = ev
+        else:
+            masters.append(ev)
+    out = []
+
+    def emit(ev, s, e, all_day):
+        if ev.get("STATUS", ("",))[0].upper() == "CANCELLED":
+            return
+        if e < keep_from or s > horizon:
+            return
+        out.append({
+            "title": unescape(ev.get("SUMMARY", ("",))[0]).strip(),
+            "start": iso(s),
+            "end": iso(e),
+            "location": unescape(ev.get("LOCATION", ("",))[0]).strip(),
+            "feed": feed_name,
+            "all_day": all_day,
+        })
+
+    for ev in masters:
+        uid = ev.get("UID", ("",))[0]
+        for s, e, all_day, orig in expand(ev, keep_from, horizon):
+            over = overrides.pop((uid, orig), None)
+            if over is not None:
+                for s2, e2, a2, _ in expand(over, keep_from, horizon):
+                    emit(over, s2, e2, a2)
+            else:
+                emit(ev, s, e, all_day)
+    for over in overrides.values():  # overrides whose master was not matched
+        for s, e, all_day, _ in expand(over, keep_from, horizon):
+            emit(over, s, e, all_day)
+    out.sort(key=lambda x: (x["start"], x["title"]))
+    return out
+
+
+def write_json(path, data):
+    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path), suffix=".tmp")
+    with os.fdopen(fd, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
+    os.replace(tmp, path)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--settings", default=os.path.join(ROOT, "data", "settings.yaml"))
+    ap.add_argument("--out", default=os.path.join(ROOT, "data", "events"))
+    args = ap.parse_args()
+    try:
+        feeds = read_feeds(args.settings)
+        os.makedirs(args.out, exist_ok=True)
+    except Exception as exc:
+        log("cannot read settings, nothing changed: %s" % exc)
+        return 0
+    if not feeds:
+        log("no calendar.feeds in settings, nothing to do")
+        return 0
+    now = datetime.now(timezone.utc)
+    for feed in feeds:
+        name = feed["name"]
+        try:
+            events = convert(fetch(feed["ical_url"]), name, now)
+            write_json(os.path.join(args.out, name + ".json"), events)
+            log("%s: wrote %d events" % (name, len(events)))
+        except Exception as exc:
+            log("%s: keeping existing data (%s: %s)" % (name, type(exc).__name__, exc))
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except Exception as exc:  # never fail the build
+        log("unexpected error, nothing changed: %s" % exc)
+        sys.exit(0)

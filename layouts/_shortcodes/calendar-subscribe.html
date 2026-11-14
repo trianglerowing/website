@@ -1,0 +1,8 @@
+{{- /* Subscribe link for one calendar feed from data/settings.yaml.
+     Usage: {{< calendar-subscribe feed="high-school" >}} */ -}}
+{{- $feed := .Get "feed" }}
+{{- range hugo.Data.settings.calendar.feeds }}
+  {{- if eq .name $feed }}
+<p><a href="{{ .subscribe_url }}">Subscribe to the {{ .label }} calendar</a></p>
+  {{- end }}
+{{- end }}

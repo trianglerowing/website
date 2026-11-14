@@ -1,7 +1,9 @@
-{{- /* Upcoming events from data/events/<feed>.json, written by the calendar
-     feed converter (calendar work). Each file is a list of
-     {title, start, end, location, feed}. Until that exists, link to the
-     SportsEngine calendar. Arguments: limit (int), feed (optional name). */ -}}
+{{- /* Upcoming events from data/events/<feed>.json, written by
+     scripts/ical-to-json. Each file is a list of
+     {title, start, end, location, feed, all_day}; times are UTC and shown in
+     the club's local time. Events still running count as upcoming. With no
+     events, link to the SportsEngine calendar.
+     Arguments: limit (int), feed (optional name). */ -}}
 {{- $limit := .limit | default 5 }}
 {{- $events := slice }}
 {{- with hugo.Data.events }}
@@ -11,13 +13,14 @@
     {{- end }}
   {{- end }}
 {{- end }}
-{{- $now := now.Format "2006-01-02T15:04:05Z07:00" }}
-{{- $upcoming := where $events "start" "ge" $now }}
+{{- $now := now.UTC.Format "2006-01-02T15:04:05Z" }}
+{{- $upcoming := where $events "end" "ge" $now }}
 {{- if $upcoming }}
 <ul class="event-list">
   {{- range first $limit (sort $upcoming "start") }}
-  {{- $start := time .start }}
-  <li><time datetime="{{ .start }}">{{ $start.Format "Mon, Jan 2" }}</time> {{ .title }}{{ with .location }} · {{ . }}{{ end }}</li>
+  {{- $zone := (time.AsTime "2000-01-01" "America/New_York").Location }}
+  {{- $start := (time .start).In $zone }}
+  <li><time datetime="{{ .start }}">{{ $start.Format "Mon, Jan 2" }}{{ if not .all_day }}, {{ $start.Format "3:04 PM" }}{{ end }}</time> {{ .title }}{{ with .location }} · {{ . }}{{ end }}</li>
   {{- end }}
 </ul>
 {{- else }}

@@ -10,8 +10,28 @@ donate:
   url: "https://givebutter.com/triangle-rowing-club"
 
 calendar:
-  # SportsEngine calendar page; feed URLs are added by the calendar work.
+  # SportsEngine calendar page.
   url: "https://www.trianglerowing.org/page/show/7282304-calendar"
+  # iCal feeds read by scripts/ical-to-json into data/events/<name>.json.
+  # ical_url is fetched at build time; subscribe_url is the link families use
+  # to add the calendar to their phones.
+  feeds:
+    - name: general
+      label: "General"
+      ical_url: "https://calendar.google.com/calendar/ical/c_nmsbq2qoae8u535rssh958v54k%40group.calendar.google.com/public/basic.ics"
+      subscribe_url: "https://calendar.google.com/calendar/u/0?cid=Y19ubXNicTJxb2FlOHU1MzVyc3NoOTU4djU0a0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+    - name: high-school
+      label: "High School"
+      ical_url: "https://calendar.google.com/calendar/ical/c_52da1v0i8ipfbtlu2vklagkfcg%40group.calendar.google.com/public/basic.ics"
+      subscribe_url: "https://calendar.google.com/calendar/u/0?cid=Y181MmRhMXYwaThpcGZidGx1MnZrbGFna2ZjZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+    - name: middle-school-boys
+      label: "Middle School Boys"
+      ical_url: "https://calendar.google.com/calendar/ical/c_4agdb0ldcopa3k4tqq18vmivrk%40group.calendar.google.com/public/basic.ics"
+      subscribe_url: "https://calendar.google.com/calendar/u/0?cid=Y180YWdkYjBsZGNvcGEzazR0cXExOHZtaXZya0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+    - name: middle-school-girls
+      label: "Middle School Girls"
+      ical_url: "https://calendar.google.com/calendar/ical/c_h139433dmrsog3o9uruhplf4hc%40group.calendar.google.com/public/basic.ics"
+      subscribe_url: "https://calendar.google.com/calendar/u/0?cid=Y19oMTM5NDMzZG1yc29nM285dXJ1aHBsZjRoY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
 
 registration:
   - key: sneak-peek-week
