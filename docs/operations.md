@@ -40,7 +40,7 @@ Do this the first time, or to replace a broken server. Nothing on SportsEngine c
    - **Backups:** on.
    - SSH key: the administrator's own public key (emergency access as root only).
    - **Cloud config:** paste the whole of `deploy/cloud-init.yaml` from `main`.
-   - Name: `trc-website`. Create.
+   - Name: `services-1` (the server hosts more than the website). Create.
 3. **Point the address at it.** Cloudflare → `trianglerowing.org` → DNS → add an `A` record: name `dev`, the server's IPv4 address, proxy status **DNS only** (grey cloud). Add an `AAAA` record with the IPv6 address the same way. Change no other record.
 4. **Tell GitHub about the server.** Repository Settings → Secrets and variables → Actions:
    - Variable `DEPLOY_HOST`: `dev.trianglerowing.org`.
