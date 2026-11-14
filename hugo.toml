@@ -25,6 +25,20 @@ disableKinds = ["taxonomy", "term"]
     source = "content/news"
     target = "content/news"
 
+# Web server redirect list, built from data/redirects.yaml into
+# public/redirects.caddy. The deploy job uploads it next to the site, not into it.
+[mediaTypes."text/x-caddy"]
+  suffixes = ["caddy"]
+
+[outputFormats.caddyredirects]
+  mediaType = "text/x-caddy"
+  baseName = "redirects"
+  isPlainText = true
+  notAlternative = true
+
+[outputs]
+  home = ["html", "rss", "caddyredirects"]
+
 [markup.goldmark.renderer]
   # Raw HTML in page text is not rendered. Embeds go through shortcodes,
   # which validate their input.

@@ -1,0 +1,6 @@
+# Generated from data/redirects.yaml by Hugo. Do not edit on the server.
+{{- range $from, $to := hugo.Data.redirects }}
+{{- if and (hasPrefix $from "/") (ne $from $to) }}
+redir {{ $from }} {{ $to }} 301
+{{- end }}
+{{- end }}

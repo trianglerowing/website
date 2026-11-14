@@ -3,6 +3,9 @@ name: Build site
 on:
   push:
     branches: [main]
+  # Build every pull request too, so a broken change shows red before merge.
+  # The deploy job below never runs for pull requests.
+  pull_request:
   schedule:
     # Nightly rebuild so calendar events stay current without edits.
     - cron: "17 7 * * *"
@@ -43,6 +46,44 @@ jobs:
           name: site
           path: public/
 
-  # TODO(Pace work package 2493, https://pace.demar.co/work_packages/2493):
-  # deploy job goes here. It downloads the "site" artifact from the build job
-  # and publishes it to the server. Do not deploy from the build job.
+  # Publishes the built site to the club's Hetzner server (docs/operations.md).
+  # Runs only for main, and only once the server settings exist:
+  #   variable DEPLOY_HOST          server address (Settings > Secrets and variables > Actions > Variables)
+  #   secret   DEPLOY_SSH_KEY       private key whose public half is in deploy/cloud-init.yaml
+  #   secret   DEPLOY_KNOWN_HOSTS   the server's SSH host keys, so the job refuses an impostor
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.DEPLOY_HOST != ''
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          sparse-checkout: deploy
+
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: site
+          path: public
+
+      - name: Set up SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload site, redirects and web server config
+        env:
+          HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          ssh_cmd="ssh -i $HOME/.ssh/deploy -o StrictHostKeyChecking=yes -o BatchMode=yes"
+          rsync -rlz --delete --exclude /redirects.caddy -e "$ssh_cmd" public/ "deploy@$HOST:/srv/trc/site/"
+          rsync -z -e "$ssh_cmd" public/redirects.caddy "deploy@$HOST:/srv/trc/redirects.caddy"
+          rsync -z -e "$ssh_cmd" deploy/Caddyfile "deploy@$HOST:/srv/trc/Caddyfile"
+          $ssh_cmd "deploy@$HOST" sudo /usr/bin/systemctl reload caddy
