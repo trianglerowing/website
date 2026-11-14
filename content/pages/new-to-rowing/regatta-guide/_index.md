@@ -12,7 +12,7 @@ A regatta is a rowing competition. Clubs from many places bring their boats on t
 
 ### Head races (fall)
 
-A head race is a long race, usually about 5,000 meters, or three miles. Boats do not start side by side. They leave the start one at a time, with a gap of several seconds between them, and each boat is timed over the same course. The fastest time wins, even if that boat was not first across the line. Many clubs hold head races in the fall.
+A head race is a long race, usually about 3,500 to 5,000 meters, or two to three miles. Boats do not start side by side. They leave the start one at a time, with a gap of several seconds between them, and each boat is timed over the same course. The fastest time wins, even if that boat was not first across the line. Many clubs hold head races in the fall.
 
 At a head race, you will see boats pass the same spot in a long line. Watch for the number the crew carries so you can tell which boat is yours.
 

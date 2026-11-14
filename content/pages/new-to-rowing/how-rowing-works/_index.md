@@ -55,15 +55,20 @@ Sprint regattas usually have heats followed by finals. Big regattas may add time
 
 ### Reading an event name
 
-An event name has four parts: gender, level, size and boat type. For example, Women's U17 2- is a pair for girls under 17, with sweep oars and no coxswain.
+An event name has four parts: gender, level, size and boat type. Examples:
+
+* Women's U17 2-: a pair for girls under 17, no coxswain.
+* Men's Youth 4x: a quad for boys under 19, no coxswain.
+* Women's Youth 4+: a four for girls under 19, with a coxswain.
+* Men's U17 4-: a four for boys under 17, no coxswain.
 
 * **Gender:** men's or women's.
-* **Level:** Youth (also called U19), U17, U16 or U15. "U" means under.
+* **Level:** Youth, U17, U16 or U15. "U" means under. Youth means under 19 (also written U19) and still in high school.
 * **Size:** the number of rowers: 1, 2, 4 or 8.
 * **Type:** x is sculling, + is sweep with a coxswain, - is sweep without one, and x+ is a sculling boat with a coxswain.
 
 ### Watching a race
 
-Race times change with the course and weather. A tailwind helps, and a headwind or crosswind slows crews. Good crews look smooth: the oars enter and leave the water together and the boat speed stays steady. A "Power 10" is a coxswain's call for ten hard strokes. TRC oar blades are orange with a dark blue stripe in the middle. Heat sheets and results are posted online, often on [RegattaCentral](https://www.regattacentral.com) and [HereNow](https://www.herenow.com/results/#/races). Schedules change, so check for updates and leave time to park.
+Race times change with the course and weather. A tailwind helps, and a headwind or crosswind slows crews. Good crews look smooth: the oars enter and leave the water together and the boat speed stays steady. A "crab" is when a blade gets stuck in the water and brakes the boat. It looks bad but is common for new rowers. A "Power 10" is a coxswain's call for ten hard strokes. TRC oar blades are orange with a dark blue stripe in the middle. Heat sheets and results are posted online, often on [RegattaCentral](https://www.regattacentral.com) and [HereNow](https://www.herenow.com/results/#/races). Schedules change, so check for updates and leave time to park.
 
 For race-day logistics, read the [regatta guide](/new-to-rowing/regatta-guide/).

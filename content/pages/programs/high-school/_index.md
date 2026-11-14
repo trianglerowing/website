@@ -16,7 +16,7 @@ Our high school program has men's and women's novice and varsity crews for stude
 
 ## Seasons
 
-* **Fall:** {{< setting "seasons.fall" >}}. Races are head races of about 5,000 meters, where boats start one at a time and race the clock. Crews attend three regattas, and some are invited to the Head of the Hooch and the Head of the Charles.
+* **Fall:** {{< setting "seasons.fall" >}}. Races are head races of about 3,500 to 5,000 meters, where boats start one at a time and race the clock. Crews attend three regattas, and some are invited to the Head of the Hooch and the Head of the Charles.
 * **Spring:** {{< setting "seasons.spring" >}}. Races are sprints of about 1,500 to 2,000 meters. Crews attend three regattas, and some qualify for Regionals and Nationals.
 * **Summer and winter:** optional [off-season training](/programs/off-season-training/).
 

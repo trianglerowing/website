@@ -72,4 +72,7 @@ Registration, payments and rosters are handled through the club's registration s
 
 ## Who do I ask?
 
+* Ask board members or other parents first. Coaches are busy coaching.
+* Need a ride? Email [newsletter@trianglerowing.org](mailto:newsletter@trianglerowing.org) with a carpool request, or ask other parents.
+
 * TODO(coach): Who is the contact for questions about practice, and who for registration and payments?
