@@ -59,10 +59,6 @@ jobs:
       group: deploy
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          sparse-checkout: deploy
-
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: site
@@ -78,12 +74,22 @@ jobs:
           chmod 600 ~/.ssh/deploy
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
-      - name: Upload site, redirects and web server config
+      # The redirect list may hold only comments and "redir" lines, so a bad
+      # merge cannot slip other web server directives into the site.
+      - name: Check redirect list
+        run: |
+          if grep -vE '^(#.*|redir /[^ ]* /[^ ]* 301)?$' public/redirects.caddy; then
+            echo "redirects.caddy contains lines other than redirects" >&2
+            exit 1
+          fi
+
+      # The web server's own configuration is root-owned on the server and is
+      # not touched here (see deploy/cloud-init.yaml).
+      - name: Upload site and redirects
         env:
           HOST: ${{ vars.DEPLOY_HOST }}
         run: |
           ssh_cmd="ssh -i $HOME/.ssh/deploy -o StrictHostKeyChecking=yes -o BatchMode=yes"
           rsync -rlz --delete --exclude /redirects.caddy -e "$ssh_cmd" public/ "deploy@$HOST:/srv/trc/site/"
           rsync -z -e "$ssh_cmd" public/redirects.caddy "deploy@$HOST:/srv/trc/redirects.caddy"
-          rsync -z -e "$ssh_cmd" deploy/Caddyfile "deploy@$HOST:/srv/trc/Caddyfile"
           $ssh_cmd "deploy@$HOST" sudo /usr/bin/systemctl reload caddy

@@ -47,24 +47,50 @@ write_files:
     content: |
       deploy ALL=(root) NOPASSWD: /usr/bin/systemctl reload caddy
 
-  # Written after packages install so the caddy package does not replace it.
-  # The real configuration is deploy/Caddyfile in the repository; the deploy
-  # job uploads it to /srv/trc/Caddyfile, so web server changes go through
-  # pull requests like everything else.
+  # Web server configuration. Root-owned on purpose: this server may also run
+  # other club services (for example a password vault), so the website's
+  # deploy key must never be able to change how any site is served. Each
+  # service gets its own file in /etc/caddy/sites/. Written after packages
+  # install so the caddy package does not replace it.
   - path: /etc/caddy/Caddyfile
     permissions: "0644"
     defer: true
     content: |
-      import /srv/trc/Caddyfile
+      import /etc/caddy/sites/*.caddy
 
-  # Placeholder until the first deploy uploads the real one.
-  - path: /srv/trc/Caddyfile
+  # The website. To change it on a running server, edit this file as root
+  # and run "systemctl reload caddy"; make the same change here by pull
+  # request so a rebuilt server matches.
+  - path: /etc/caddy/sites/trc-website.caddy
     permissions: "0644"
     defer: true
     content: |
-      :80 {
-      	respond "Triangle Rowing Club website is being set up." 200
+      dev.trianglerowing.org {
+      	root * /srv/trc/site
+      	encode zstd gzip
+
+      	# Old SportsEngine addresses -> new pages (301), generated from
+      	# data/redirects.yaml and uploaded by the deploy job. Imported inside
+      	# this site only, so it cannot affect any other service.
+      	import /srv/trc/redirects.caddy
+
+      	header {
+      		# Development site: keep it out of search engines until launch.
+      		X-Robots-Tag "noindex, nofollow"
+      		Strict-Transport-Security "max-age=31536000"
+      		X-Content-Type-Options "nosniff"
+      		Referrer-Policy "strict-origin-when-cross-origin"
+      		-Server
+      	}
+
+      	file_server
       }
+
+      # Launch cutover (a separate, planned step; see
+      # docs/decisions/0001-platform-and-hosting.md): change the site address
+      # above to "trianglerowing.org, www.trianglerowing.org", delete the
+      # X-Robots-Tag line, and set params.noindex = false in hugo.toml. Until
+      # then trianglerowing.org and www stay on SportsEngine.
 
 runcmd:
   - [mkdir, -p, /srv/trc/site]
