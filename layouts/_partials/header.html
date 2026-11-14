@@ -1,7 +1,7 @@
 {{- /* The shield is TRC's primary logo and must be the most prominent logo on
      the page (brand guide). It is added under assets/brand/ by the brand
      assets work; until then the club name shows as text. */ -}}
-<header class="site-header">
+<header class="site-header" data-pagefind-ignore>
   <div class="wrap">
     <a class="brand" href="{{ site.Home.RelPermalink }}">
       {{- /* The header is navy, so it uses the shield made for blue backgrounds,
@@ -20,5 +20,8 @@
         {{- end }}
       </ul>
     </nav>
+    {{- with site.GetPage "/search" }}
+    <a class="site-search-link" href="{{ .RelPermalink }}">Search</a>
+    {{- end }}
   </div>
 </header>
