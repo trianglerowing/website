@@ -1,15 +1,24 @@
-/* Self-hosted fonts (SIL Open Font License 1.1). See docs/brand.md. */
+/* Self-hosted fonts. See docs/brand.md for licences. */
 
-/* Headings: League Gothic 1.601, The League of Moveable Type. */
+/* Headings: Aller Bold, Standard Edition (Dalton Maag Free Licence,
+   static/fonts/Aller-Font-License.txt). Served exactly as supplied:
+   the licence forbids converting the files, so they stay TrueType. */
 @font-face {
-  font-family: "League Gothic";
-  src: url("/fonts/LeagueGothic-Regular.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Aller";
+  src: url("/fonts/Aller_Bd.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Aller";
+  src: url("/fonts/Aller_BdIt.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
 
-/* Body text: Urbanist. */
+/* Body text: Urbanist (SIL Open Font License 1.1). */
 @font-face {
   font-family: "Urbanist";
   src: url("/fonts/Urbanist-Regular.woff2") format("woff2");
