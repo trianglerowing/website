@@ -15,7 +15,8 @@ Why it is built this way: [decisions/0001-platform-and-hosting.md](decisions/000
 | Domain and DNS (trianglerowing.org, .com, .net) | Cloudflare (club account) | Cloudflare account members |
 | Deploy key (private half) | GitHub secret `DEPLOY_SSH_KEY` | Organization Owners (write-only; nobody can read it back) |
 | Server host keys | GitHub secret `DEPLOY_KNOWN_HOSTS` | Organization Owners |
-| Server address | GitHub variable `DEPLOY_HOST` | Organization Owners |
+| Server address (IPv4) | GitHub variable `DEPLOY_HOST` | Organization Owners |
+| Cloudflare rule `dev site full strict SSL` (HTTPS between Cloudflare and the server) | Cloudflare → Rules | Cloudflare account members |
 
 On the server:
 
@@ -34,18 +35,19 @@ Do this the first time, or to replace a broken server. Nothing on SportsEngine c
 
 1. **Deploy key.** Skip if the `DEPLOY_SSH_KEY` secret exists and its public half is already in `deploy/cloud-init.yaml`. Otherwise create a new ed25519 key pair, store the private half as the `DEPLOY_SSH_KEY` repository secret, and put the public half in `deploy/cloud-init.yaml` (by pull request).
 2. **Create the server.** Hetzner Cloud console → project `trc-website` → **Add Server**:
-   - Location: Ashburn, VA (closest to Raleigh).
+   - Location: Helsinki. The current server `services-1` is there because Hetzner's lower-cost types are not sold in Ashburn; Cloudflare's proxy caches the website close to visitors, so the distance is barely noticeable. Ashburn works the same if a suitable type is offered there.
    - Image: Debian 13.
    - Type: a shared-CPU type with 4 GB of memory (room for other club services; the website alone needs far less). Arm64 or x86 both work.
    - **Backups:** on.
    - SSH key: the administrator's own public key (emergency access as root only).
    - **Cloud config:** paste the whole of `deploy/cloud-init.yaml` from `main`.
    - Name: `services-1` (the server hosts more than the website). Create.
-3. **Point the address at it.** Cloudflare → `trianglerowing.org` → DNS → add an `A` record: name `dev`, the server's IPv4 address, proxy status **DNS only** (grey cloud). Add an `AAAA` record with the IPv6 address the same way. Change no other record.
-4. **Tell GitHub about the server.** Repository Settings → Secrets and variables → Actions:
-   - Variable `DEPLOY_HOST`: `dev.trianglerowing.org`.
-   - Secret `DEPLOY_KNOWN_HOSTS`: the output of `ssh-keyscan -t ed25519 dev.trianglerowing.org`, run a few minutes after the server starts.
-5. **Deploy.** Actions → Build site → Run workflow on `main`. When both jobs are green, https://dev.trianglerowing.org shows the site with a valid certificate.
+3. **Point the address at it.** Cloudflare → `trianglerowing.org` → DNS → add an `A` record: name `dev`, the server's IPv4 address, **Proxied** (orange cloud). Add an `AAAA` record with the IPv6 address (the `::1` address in the range Hetzner shows) the same way. Change no other record.
+4. **Make Cloudflare talk HTTPS to the server.** Cloudflare → `trianglerowing.org` → Rules → Overview → Create rule → Configuration Rule named `dev site full strict SSL`: when Hostname equals `dev.trianglerowing.org`, set SSL to **Full (strict)**. Without it, Cloudflare connects over plain HTTP and the page loops. Never change the zone-wide SSL setting: `trianglerowing.org` itself is proxied to SportsEngine. Caddy gets its own Let's Encrypt certificate through the proxy.
+5. **Tell GitHub about the server.** Repository Settings → Secrets and variables → Actions:
+   - Variable `DEPLOY_HOST`: the server's **IPv4 address**, not the name, because SSH cannot pass through Cloudflare's proxy.
+   - Secret `DEPLOY_KNOWN_HOSTS`: the output of `ssh-keyscan -t ed25519 <IPv4 address>`, run a few minutes after the server starts. Compare its fingerprint with `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` run on the server as root.
+6. **Deploy.** Actions → Build site → Run workflow on `main`. When both jobs are green, https://dev.trianglerowing.org shows the site with a valid certificate.
 
 ## Replace the deploy key
 
