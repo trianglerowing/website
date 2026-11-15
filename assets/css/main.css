@@ -17,8 +17,8 @@
   --trc-muted: #4A5566;
 
   /* Typography: change a font here and nowhere else (see docs/brand.md).
-     Headings use League Gothic, a condensed athletic face set in capitals. */
-  --font-heading: "League Gothic", "Arial Narrow", Impact, sans-serif;
+     Headings use Aller Bold, the club's brand font, set in capitals. */
+  --font-heading: "Aller", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Type scale (1.25 ratio) */
@@ -49,18 +49,17 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  font-weight: 400; /* League Gothic has one weight; no synthetic bold */
+  font-weight: 700;
   color: var(--trc-navy);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
+  line-height: 1.1;
+  letter-spacing: 0;
   text-transform: uppercase;
   margin: 1.5em 0 0.4em;
 }
-/* League Gothic is condensed, so headings run larger than the body scale. */
-h1 { font-size: clamp(2.75rem, 7vw, 4rem); margin-top: 0.5em; }
-h2 { font-size: clamp(2.1rem, 5vw, 2.75rem); }
-h3 { font-size: 1.85rem; }
-h4 { font-size: 1.5rem; }
+h1 { font-size: clamp(2.1rem, 5.5vw, 3.1rem); margin-top: 0.5em; }
+h2 { font-size: clamp(1.6rem, 3.8vw, 2.15rem); }
+h3 { font-size: 1.4rem; }
+h4 { font-size: 1.15rem; }
 
 a { color: var(--trc-navy); text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
 a:hover, a:focus-visible { color: var(--trc-orange-text); }
@@ -77,7 +76,7 @@ img { max-width: 100%; height: auto; }
 /* Header */
 .site-header { background: var(--trc-navy); color: var(--trc-white); border-bottom: 4px solid var(--trc-orange); }
 .site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space); padding-block: 0.75rem; }
-.brand { display: flex; align-items: center; gap: 0.75rem; color: var(--trc-white); text-decoration: none; font-family: var(--font-heading); font-size: 1.9rem; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; }
+.brand { display: flex; align-items: center; gap: 0.75rem; color: var(--trc-white); text-decoration: none; font-family: var(--font-heading); font-weight: 700; font-size: 1.4rem; line-height: 1.1; text-transform: uppercase; }
 .brand img { height: 64px; width: auto; }
 .brand:hover, .brand:focus-visible { color: var(--trc-white); }
 
